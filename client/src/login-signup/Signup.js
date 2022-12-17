@@ -6,11 +6,10 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const user = { username, email, password };
   const { error, isLoading, signup } = useSignup();
 
   const handleSignup = async () => {
-    await signup(user);
+    await signup(username, email, password );
   };
   return (
     <div>

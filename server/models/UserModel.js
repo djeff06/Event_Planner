@@ -43,16 +43,16 @@ UserSchema.statics.signup = async function (
   }
 
   if (!validator.isEmail(email)) {
-    throw Error("Credentials must be valid");
+    throw Error("Please use a valid Email");
   }
 
   if (!validator.isStrongPassword(password)) {
-    throw Error("Credentials must be valid");
+    throw Error("Please use a strong password");
   }
 
-  if (confirmPassword !== password) {
+  /* if ( password !== confirmPassword) {
     throw new Error("Passwords don't match. Try again.");
-  }
+  } */
 
   const emailExists = await this.findOne({ email });
 
@@ -84,7 +84,7 @@ UserSchema.statics.login = async function (email, password) {
   }
 
   if (!validator.isEmail(email)) {
-    throw Error("Credentials must be valid");
+    throw Error("Please use a valid Email");
   }
 
   const user = await this.findOne({ email });
@@ -95,7 +95,7 @@ UserSchema.statics.login = async function (email, password) {
 
   const correctPassword = await bcrypt.compare(password, user.password);
   if (!correctPassword) {
-    throw Error("Incorrect Credentials");
+    throw Error("Incorrect Password");
   }
 
   return user;

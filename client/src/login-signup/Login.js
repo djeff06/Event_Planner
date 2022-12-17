@@ -9,10 +9,8 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { error, isLoading, login } = useLogin();
 
-  const user = { email, password };
-  const url = "/api/users/login";
   const handelLogin = async () => {
-    await login({ url: url, data: user });
+    await login(email, password);
   };
   return (
     <div>

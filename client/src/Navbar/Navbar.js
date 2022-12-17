@@ -3,16 +3,18 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import { Auth } from "../contexts/Auth";
+import { useLogout } from "../hooks/UseLogout";
 
 const Navbar = ({ handleLoginClick }) => {
   const { user } = useContext(Auth);
+  const { logout } = useLogout();
   const [active, setActive] = useState(false);
 
   const showMenu = () => {
     setActive(!active);
   };
-  const handleClick = () => {
-    handleLoginClick();
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -119,6 +121,12 @@ const Navbar = ({ handleLoginClick }) => {
                 >
             <Link to="/series">Categories</Link>
           </li>
+          <button
+            onClick={handleLogout}
+            className="p-2 border border-red-400 rounded-md"
+          >
+            Logout
+          </button>
           </>
             )}
           {
@@ -128,7 +136,7 @@ const Navbar = ({ handleLoginClick }) => {
                 <Link
                   className="btn btn-ghost text-white normal-case mr-2"
                   to="/login"
-                  onClick={handleClick}
+                  
                 >
                   Login
                 </Link>
