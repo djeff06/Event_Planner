@@ -6,10 +6,11 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { error, isLoading, signup } = useSignup();
 
   const handleSignup = async () => {
-    await signup(username, email, password );
+    await signup(username, email, password, confirmPassword );
   };
   return (
     <div>
@@ -59,6 +60,10 @@ export default function Signup() {
             <input
               type="password"
               name="password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
               className="login-box"
               placeholder="Confirm your password"
             />

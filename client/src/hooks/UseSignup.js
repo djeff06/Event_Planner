@@ -7,7 +7,7 @@ export const useSignup = () => {
 
   const { dispatch } = useContext(Auth);
 
-  const signup = async (username, email, password) => {
+  const signup = async (username, email, password, confirmPassword) => {
     setIsLoading(true);
     setError(null);
 
@@ -16,7 +16,7 @@ export const useSignup = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username, email, password, confirmPassword }),
     });
 
     const json = await response.json();

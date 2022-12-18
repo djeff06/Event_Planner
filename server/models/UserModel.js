@@ -50,9 +50,9 @@ UserSchema.statics.signup = async function (
     throw Error("Please use a strong password");
   }
 
-  /* if ( password !== confirmPassword) {
+  if (!validator.isStrongPassword(password) || password !== confirmPassword) {
     throw new Error("Passwords don't match. Try again.");
-  } */
+  }
 
   const emailExists = await this.findOne({ email });
 
