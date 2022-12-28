@@ -1,26 +1,35 @@
 import "./App.css";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Home from "./main/Home";
 import Login from "./login-signup/Login";
 import Signup from "./login-signup/Signup";
 import { Auth } from "./contexts/Auth";
-import { useContext } from "react";
-
-
+import { useContext, useEffect, useState } from "react";
 
 function App() {
   const { user } = useContext(Auth);
-  
+  const [theme1, setTheme1] = useState("dark");
+  useEffect(() => {
+    document.body.className = theme1;
+  }, [theme1]);
+
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/login" element={!user ?( <Login />) :( <Navigate to="/"/>)} />
-        <Route path="/signup" element={!user ?( <Signup />) :( <Navigate to="/"/>)} />
-      </Routes>
-     
+      <div className={`${theme1}`}>
+        {!user && <Navbar theme1={theme1} setTheme1={setTheme1} />}{" "}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/" />}
+          />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

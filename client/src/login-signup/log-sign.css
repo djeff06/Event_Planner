@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap");
-
+/* dark and light mode */
 .login-form {
   width: 100%;
   display: flex;
@@ -7,40 +7,6 @@
   align-items: center;
   min-height: 100vh;
 }
-
-.form-box {
-  margin-top: 7vh;
-  opacity: 80%;
-  background: black;
-  padding-right: 80px;
-  padding-left: 80px;
-  padding-bottom: 10px;
-  box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.2);
-  background-color: #ffffff;
-  border-radius: 25px;
-}
-
-.login-text {
-  width: 100%;
-  color: black;
-  border-bottom: 2px solid white;
-  line-height: 30px;
-  width: 100%;
-  font-weight: bolder;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5vh;
-}
-
-label {
-  width: 100%;
-  text-align: center;
-  padding-bottom: 0.5rem;
-  color: rgba(88, 85, 85, 0.9);
-}
-
 .login-box {
   display: flex;
   justify-content: center;
@@ -76,7 +42,6 @@ label {
 .login-box:focus::-webkit-input-placeholder {
   opacity: 0.5;
 }
-
 .login-btn {
   margin-left: 25px;
   border-radius: 25px;
@@ -95,13 +60,6 @@ label {
   cursor: pointer;
   transition: opacity 0.25s ease-out;
 }
-
-.login-btn:hover {
-  background-color: #7fffd4;
-  color: #1e90ff;
-  opacity: 0.8;
-}
-
 .show {
   display: block;
   transition: 800ms;
@@ -112,68 +70,89 @@ label {
   transform: translateY(100px) scale(0) rotateY(180deg);
   opacity: 0;
 }
-/* 
-
-.row button {
-  border-radius: 25px;
-  width: 80%;
-  height: 40px;
-  font-size: 1.3rem;
-  color: white;
-  font-weight: 700;
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    90deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
-  border: 0px;
-  cursor: pointer;
-  transition: opacity 0.25s ease-out;
-}
-
-.row button:hover {
+.login-btn:hover {
+  background-color: #7fffd4;
+  color: #1e90ff;
   opacity: 0.8;
 }
-
-#button {
-  padding-bottom: 1.5rem;
+/* dark mode */
+.dark .form-box {
+  margin-top: 7vh;
+  opacity: 80%;
+  background: black;
+  padding-right: 80px;
+  padding-left: 80px;
+  padding-bottom: 10px;
+  box-shadow: 10px 10px 10px 1px rgba(255, 255, 255, 0.5);
+  background-color: rgb(255, 255, 255);
+  border-radius: 25px;
 }
 
-#facebookIcon {
-  background-image: url("https://image.flaticon.com/icons/svg/145/145802.svg");
-  background-repeat: no-repeat;
-  width: 3rem;
-  height: 3rem;
+.dark #input{
+  color: black 
 }
 
-#twitterIcon {
-  background-image: url("https://image.flaticon.com/icons/svg/145/145812.svg");
-  background-repeat: no-repeat;
-  width: 3rem;
-  height: 3rem;
-}
-
-#googleIcon {
-  background-image: url("https://image.flaticon.com/icons/svg/145/145804.svg");
-  background-repeat: no-repeat;
-  width: 3rem;
-  height: 3rem;
-}
-
-#iconGroup {
+.dark .login-text {
+  width: 100%;
+  color: black;
+  border-bottom: 2px solid white;
+  line-height: 30px;
+  width: 100%;
+  font-weight: bolder;
+  text-align: center;
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
+  align-items: center;
+  padding-top: 5vh;
 }
 
-#iconGroup a {
-  margin: 0 0.6rem;
-}
-
-#alternativeLogin {
+.dark label {
+  width: 100%;
   text-align: center;
-  padding-top: 2rem;
-  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(88, 85, 85, 0.9);
 }
- */
+.dark #crt{
+  color: black;
+}
+
+/* light mode */
+.light .form-box {
+  margin-top: 7vh;
+  opacity: 80%;
+  background: rgb(255, 255, 255);
+  padding-right: 80px;
+  padding-left: 80px;
+  padding-bottom: 10px;
+  box-shadow: 10px 10px 10px 1px rgba(42, 41, 41, 0.5);
+  background-color: rgb(40, 38, 38);
+  border-radius: 25px;
+}
+
+.light .login-text {
+  width: 100%;
+  color: rgb(249, 245, 245);
+  border-bottom: 2px solid white;
+  line-height: 30px;
+  width: 100%;
+  font-weight: bolder;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5vh;
+}
+.light #input{
+  color: white 
+}
+
+.light label {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5rem;
+  color: rgba(238, 238, 238, 0.9);
+}
+
+.light #crt{
+  color: white;
+}

@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import { Auth } from "../contexts/Auth";
 import { useLogout } from "../hooks/UseLogout";
+import { PopupMenu } from "react-simple-widgets";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import "./navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ theme1, setTheme1 }) => {
   const { user } = useContext(Auth);
   const { logout } = useLogout();
   const [active, setActive] = useState(false);
@@ -13,17 +16,31 @@ const Navbar = () => {
   const showMenu = () => {
     setActive(!active);
   };
+
   const handleLogout = () => {
     logout();
   };
 
+  const toggleTheme = () => {
+    if (theme1 === "light") {
+      setTheme1("dark");
+    } else {
+      setTheme1("light");
+    }
+  };
+
+  const [isDarkMode, setDarkMode] = useState(true);
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
   return (
-    <div className="fixed w-full text-white flex justify-between pt-0 pr-4 pl-4  items-center">
-      <div className="text-2xl font-bold ">
+    <div className="fixed w-full flex justify-between pt-0 pr-4 pl-4  items-center">
+      <div className="text-2xl font-bold  ">
         <Link to="/">
           <h1>
             {" "}
-            <span className="block text-2xl">Event Planner</span>
+            <span className=" block text-2xl">Event Planner</span>
           </h1>
         </Link>
       </div>
@@ -60,7 +77,7 @@ const Navbar = () => {
                 </div>
               </li>
               <li
-                className="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
+                className="light: transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
                 before:absolute
                 before:-bottom-0
                 before:left-0
@@ -81,7 +98,7 @@ const Navbar = () => {
               </li>
 
               <li
-                className="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
+                className="light: transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
                 before:absolute
                 before:-bottom-0
                 before:left-0
@@ -101,7 +118,7 @@ const Navbar = () => {
                 <Link to="/movies">Events</Link>
               </li>
               <li
-                className="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
+                className="light: transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-150 duration-300 before:content-['']
                 before:absolute
                 before:-bottom-0
                 before:left-0
@@ -120,24 +137,88 @@ const Navbar = () => {
               >
                 <Link to="/series">Categories</Link>
               </li>
-              <button
-                onClick={handleLogout}
-                className="p-2 border border-red-400 rounded-md"
-              >
-                Logout
-              </button>
+
+              {/* dropdown menu user profile */}
+
+              <div className="text-black text-end">
+                <PopupMenu>
+                  <button id="profile-picture" className="btn btn-primary">
+                    <small>{user.username[0]}</small>
+                  </button>
+
+                  <div className="card text-start bg-slate-50 mt-10 mr-5">
+                    <div className="card-body px-4 py-4">
+                      <div
+                        id="circle-avatar"
+                        className="text-center mx-auto mb-4"
+                      >
+                        <span>{user.username[0]}</span>
+                      </div>
+
+                      <h5 className="text-center mb-0 ">{user.username}</h5>
+                      <p className="text-center mb-2  normal-case">
+                        {user.email}
+                      </p>
+
+                      <hr />
+
+                      <p className="mb-0 font-bold  text-xs">ROLES</p>
+                      <p className="" style={{ fontSize: 12 }}>
+                        {[
+                          "Submitter",
+                          "Project manager",
+                          "Change control board",
+                        ].join(", ")}
+                      </p>
+
+                      <hr className="mb-0" style={{ margin: "0 -0px 0" }} />
+
+                      <div
+                        className="list-group list-group-flush"
+                        style={{ margin: "0 -0 0" }}
+                      >
+                        <button className="list-group-item list-group-item-action mb-2 ">
+                          <big>Notification</big>
+                        </button>
+                        <button className="list-group-item list-group-item-action  ">
+                          <big>Profile settings</big>
+                        </button>
+                      </div>
+
+                      <hr style={{ margin: "0 0px 24px" }} />
+                      <Link className="btn btn-ghost normal-case mr-2" to="/login">
+                      <div className="d-grid">
+                        <button
+                          onClick={handleLogout}
+                          className="btn btn-secondary "
+                        >
+                          <big>Logout</big>
+                        </button>
+                      </div>
+                      </Link>
+                    </div>
+                  </div>
+                </PopupMenu>
+              </div>
             </>
           )}
           {
-            <Link
-              className="btn btn-ghost text-white normal-case mr-2"
-              to="/login"
-            >
-              <li className="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 duration-300 cursor-pointer">
+            <Link className="btn btn-ghost normal-case mr-2" to="/login">
+              <li className=" transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 duration-300 cursor-pointer">
                 {!user && <div>Login</div>}
               </li>
             </Link>
           }
+          <li className=" transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 duration-300 cursor-pointer">
+            <button onClick={toggleTheme}>
+              <DarkModeSwitch
+                style={{ marginBottom: ".1rem" }}
+                checked={isDarkMode}
+                onChange={toggleDarkMode}
+                size={20}
+              />
+            </button>
+          </li>
         </ul>
 
         <MenuItems showMenu={showMenu} active={active} />
