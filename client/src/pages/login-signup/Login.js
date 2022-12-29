@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../hooks/UseSignup";
+import { useLogin } from "../../hooks/UseLogin";
 
-export default function Signup() {
-  const [username, setUsername] = useState("");
+
+import "./log-sign.css";
+
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const { error, isLoading, signup } = useSignup();
+  const { error, isLoading, login } = useLogin();
+ /*  const [ profile, setProfile ] = useState([]);
+  const clientId =
+    "1093637141452-v7ettovlkuta399c0n71dcu6sfdfbte9.apps.googleusercontent.com";
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+    gapi.load("client:auth2", initClient);
+  });
+  const onSuccess = (res) => {
+    setProfile(res.profileObj);
 
-  const handleSignup = async () => {
-    await signup(username, email, password, confirmPassword );
+  };
+  const onFailure = (err) => {
+    console.log("failed:", err);
+  }; */
+
+  const handelLogin = async () => {
+    await login(email, password);
   };
   return (
     <div>
@@ -18,28 +38,17 @@ export default function Signup() {
         <div className="form-box solid">
           <div> {error && <p className="text-rose-600">{error}</p>}</div>
           <form>
-            <h1 className="login-text">Sign Up</h1>
-            <label>Username</label>
-            <br></br>
-            <input
-              type="text"
-              name="username"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              className="login-box"
-              placeholder="Enter your Username"
-            />
+            <h1 className="login-text">Sign In</h1>
             <label>Email</label>
             <br></br>
             <input
               type="email"
-              name="email"
+              name="username"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              id="input"
               className="login-box"
               placeholder="Enter your Email"
             />
@@ -53,19 +62,9 @@ export default function Signup() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              id="input"
               className="login-box"
-              placeholder="Choose your password"
-            />
-            <br></br>
-            <input
-              type="password"
-              name="password"
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-              className="login-box"
-              placeholder="Confirm your password"
+              placeholder="Enter your password"
             />
 
             <input
@@ -87,19 +86,27 @@ export default function Signup() {
             <input
               disabled={isLoading}
               type="submit"
-              value="SIGNUP"
-              onClick={handleSignup}
+              value="LOGIN"
+              onClick={handelLogin}
               className="login-btn"
             />
+            {/* <GoogleLogin
+              clientId={clientId}
+              buttonText="Sign in with Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            /> */}
             <br></br>
             <br></br>
-            <div className="flex justify-end">
-              I already have an account !
+            <div id="crt" className="flex justify-end">
+              Not registered ?
               <Link
                 className="text-blue-700 hover:cursor-pointer pl-2 "
-                to={"/login"}
+                to={"/signup"}
               >
-                Login
+                create account
               </Link>
             </div>
           </form>
@@ -107,4 +114,6 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginForm;

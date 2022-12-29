@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar/Navbar";
-import Home from "./main/Home";
-import Login from "./login-signup/Login";
-import Signup from "./login-signup/Signup";
+import Navbar from "./components/Navbar/Navbar"
+import Home from "./pages/Home";
+import Login from "./pages/login-signup/Login";
+import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
 import { useContext, useEffect, useState } from "react";
 

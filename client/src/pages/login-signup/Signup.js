@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../hooks/UseLogin";
+import { useSignup } from "../../hooks/UseSignup";
 
-import "./log-sign.css";
-
-const LoginForm = () => {
+export default function Signup() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { error, isLoading, login } = useLogin();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { error, isLoading, signup } = useSignup();
 
-  const handelLogin = async () => {
-    await login(email, password);
+  const handleSignup = async () => {
+    await signup(username, email, password, confirmPassword );
   };
   return (
     <div>
@@ -18,12 +18,24 @@ const LoginForm = () => {
         <div className="form-box solid">
           <div> {error && <p className="text-rose-600">{error}</p>}</div>
           <form>
-            <h1 className="login-text">Sign In</h1>
+            <h1 className="login-text">Sign Up</h1>
+            <label>Username</label>
+            <br></br>
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+              className="login-box"
+              placeholder="Enter your Username"
+            />
             <label>Email</label>
             <br></br>
             <input
               type="email"
-              name="username"
+              name="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -42,7 +54,18 @@ const LoginForm = () => {
                 setPassword(e.target.value);
               }}
               className="login-box"
-              placeholder="Enter your password"
+              placeholder="Choose your password"
+            />
+            <br></br>
+            <input
+              type="password"
+              name="password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+              className="login-box"
+              placeholder="Confirm your password"
             />
 
             <input
@@ -64,19 +87,19 @@ const LoginForm = () => {
             <input
               disabled={isLoading}
               type="submit"
-              value="LOGIN"
-              onClick={handelLogin}
+              value="SIGNUP"
+              onClick={handleSignup}
               className="login-btn"
             />
             <br></br>
             <br></br>
-            <div className="flex justify-end">
-              Not registered ?
+            <div id="crt" className="flex justify-end">
+              I already have an account !
               <Link
                 className="text-blue-700 hover:cursor-pointer pl-2 "
-                to={"/signup"}
+                to={"/login"}
               >
-                create account
+                Login
               </Link>
             </div>
           </form>
@@ -84,6 +107,4 @@ const LoginForm = () => {
       </div>
     </div>
   );
-};
-
-export default LoginForm;
+}
