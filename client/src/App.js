@@ -7,7 +7,7 @@ import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
 import React, { useContext, useEffect, useState } from "react";
 import { MyProSidebarProvider } from "./components/sidebar/sidebarContext";
-import Topbar from "./components/Topbar";
+import Topbar from "./components/topbar/Topbar";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./pages/Dashbord";

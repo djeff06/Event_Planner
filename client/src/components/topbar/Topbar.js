@@ -1,7 +1,14 @@
 import React from "react";
 import { useContext } from "react";
-import { ColorModeContext, tokens } from "../theme";
-import { useTheme, Box, IconButton, InputBase } from "@mui/material";
+import { ColorModeContext, tokens } from "../../theme";
+import {
+  useTheme,
+  Box,
+  IconButton,
+  InputBase,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -11,7 +18,8 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { useProSidebar } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/UseLogout";
+import { useLogout } from "../../hooks/UseLogout";
+import "./dropDownMenu.css";
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -23,20 +31,33 @@ const Topbar = () => {
     logout();
   };
 
-  const dropMenu = () => {
-    console.log("profile icon clicked");
-    return (
-      <>
-      
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const dummyMenuItems = [
+    {
+      title: (
+        <div className="d-grid">
+          <button className="btn btn-secondary ">
+            <big>Profile</big>
+          </button>
+        </div>
+      ),
+    },
+    {
+      title: (
         <div className="d-grid">
           <button onClick={handleLogout} className="btn btn-secondary ">
             <big>Logout</big>
           </button>
         </div>
-      
-      </>
-    );
-  };
+      ),
+    },
+  ];
 
   return (
     <div className="w-full">
@@ -76,10 +97,32 @@ const Topbar = () => {
           <IconButton>
             <SettingsOutlinedIcon />
           </IconButton>
-          <IconButton onClick={dropMenu}>
+          <IconButton
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            aria-label="Open to show more"
+            title="Open to show more"
+          >
             <PersonOutlinedIcon />
-            
           </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {dummyMenuItems.map((item) => (
+              <MenuItem
+                onClick={handleClose}
+                key={item.title}
+                value={item.title}
+              >
+                {item.title}
+              </MenuItem>
+            ))}
+          </Menu>
           {broken && rtl && (
             <IconButton
               sx={{ margin: "0 6 0 2" }}
