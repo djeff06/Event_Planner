@@ -1,7 +1,6 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/UseLogin";
-
 
 import "./log-sign.css";
 
@@ -9,7 +8,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { error, isLoading, login } = useLogin();
- /*  const [ profile, setProfile ] = useState([]);
+  /*  const [ profile, setProfile ] = useState([]);
   const clientId =
     "1093637141452-v7ettovlkuta399c0n71dcu6sfdfbte9.apps.googleusercontent.com";
   useEffect(() => {
@@ -31,6 +30,7 @@ const LoginForm = () => {
 
   const handelLogin = async () => {
     await login(email, password);
+    
   };
   return (
     <div>
@@ -83,13 +83,15 @@ const LoginForm = () => {
             </label>
             <br></br>
             <br></br>
-            <input
-              disabled={isLoading}
-              type="submit"
-              value="LOGIN"
-              onClick={handelLogin}
-              className="login-btn"
-            />
+            
+              <input
+                disabled={isLoading}
+                type="submit"
+                value="LOGIN"
+                onClick={handelLogin}
+                className="login-btn"
+              />
+            
             {/* <GoogleLogin
               clientId={clientId}
               buttonText="Sign in with Google"
