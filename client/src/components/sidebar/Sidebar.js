@@ -1,5 +1,5 @@
 // docs https://github.com/azouaoui-med/react-pro-sidebar
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
 
@@ -19,11 +19,12 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"; */
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 
 /* import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
- */import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+ */ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 /* import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
- */import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
+ */ import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
+import { Auth } from "../../contexts/Auth";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -47,6 +48,7 @@ const MyProSidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const { sidebarRTL, setSidebarRTL, sidebarImage } = useSidebarContext();
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
+  const { user } = useContext(Auth);
   return (
     <Box
       sx={{
@@ -114,7 +116,7 @@ const MyProSidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  ADMIN
                 </Typography>
                 <IconButton
                   onClick={
@@ -138,14 +140,17 @@ const MyProSidebar = () => {
                   },
                 }}
               >
-                <img
+                <div id="circle-avatar" className="text-center mx-auto mb-4">
+                  <span className="uppercase">{user.username[0]}</span>
+                </div>
+                {/* <img
                   className="avater-image"
                   alt="profile user"
                   width="100px"
                   height="100px"
                   src={""}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
+                /> */}
               </Box>
               <Box textAlign="center">
                 <Typography
@@ -153,8 +158,9 @@ const MyProSidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
+                  textTransform="uppercase"
                 >
-                  Harun Jeylan
+                  {user.username}
                 </Typography>
               </Box>
             </Box>
@@ -218,7 +224,6 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-          
 
             <Typography
               variant="h6"
@@ -227,7 +232,7 @@ const MyProSidebar = () => {
             >
               Charts
             </Typography>
-           
+
             <Item
               title="Pie Chart"
               to="/pie"
@@ -235,7 +240,6 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-          
           </Box>
         </Menu>
       </Sidebar>

@@ -8,6 +8,7 @@ import {
   InputBase,
   Menu,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -17,7 +18,6 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { useProSidebar } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/UseLogout";
 import "./dropDownMenu.css";
 const Topbar = () => {
@@ -25,8 +25,9 @@ const Topbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { toggleSidebar, broken, rtl } = useProSidebar();
-  const { logout } = useLogout();
 
+  // profile menu
+  const { logout } = useLogout();
   const handleLogout = () => {
     logout();
   };
@@ -40,6 +41,7 @@ const Topbar = () => {
   };
   const dummyMenuItems = [
     {
+      id: 1,
       title: (
         <div className="d-grid">
           <button className="btn btn-secondary ">
@@ -49,6 +51,7 @@ const Topbar = () => {
       ),
     },
     {
+      id: 2,
       title: (
         <div className="d-grid">
           <button onClick={handleLogout} className="btn btn-secondary ">
@@ -62,6 +65,16 @@ const Topbar = () => {
   return (
     <div className="w-full">
       <Box display="flex" justifyContent="space-between" p={3}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          ml="15px"
+        >
+          <Typography fontWeight="bold" variant="h1" color={colors.grey[100]}>
+            Event Planner
+          </Typography>
+        </Box>
         <Box display="flex" p={2}>
           {broken && !rtl && (
             <IconButton
@@ -114,11 +127,7 @@ const Topbar = () => {
             onClose={handleClose}
           >
             {dummyMenuItems.map((item) => (
-              <MenuItem
-                onClick={handleClose}
-                key={item.title}
-                value={item.title}
-              >
+              <MenuItem onClick={handleClose} key={item.id} value={item.title}>
                 {item.title}
               </MenuItem>
             ))}
