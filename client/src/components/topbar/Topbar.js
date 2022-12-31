@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import {
@@ -20,11 +20,35 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useProSidebar } from "react-pro-sidebar";
 import { useLogout } from "../../hooks/UseLogout";
 import "./dropDownMenu.css";
+
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { toggleSidebar, broken, rtl } = useProSidebar();
+
+  const [theme1, setTheme1] = useState("dark");
+  useEffect(() => {
+    document.body.className = theme1;
+  }, [theme1]);
+
+  const toggleTheme = () => {
+    if (theme1 === "light") {
+      setTheme1("dark");
+      colorMode.toggleColorMode();
+    } else {
+      setTheme1("light");
+      colorMode.toggleColorMode();
+    }
+  };
+
+  const [isDarkMode, setDarkMode] = useState(true);
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
 
   // profile menu
   const { logout } = useLogout();
@@ -97,13 +121,6 @@ const Topbar = () => {
           </Box>
         </Box>
         <Box display="flex">
-          <IconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === "dark" ? (
-              <LightModeOutlinedIcon />
-            ) : (
-              <DarkModeOutlinedIcon />
-            )}
-          </IconButton>
           <IconButton>
             <NotificationsOutlinedIcon />
           </IconButton>
@@ -132,6 +149,14 @@ const Topbar = () => {
               </MenuItem>
             ))}
           </Menu>
+          <button onClick={toggleTheme} checked={isDarkMode} onChange={toggleDarkMode} className={"pl-5"}>
+            <DarkModeSwitch
+              checked={isDarkMode}
+              onChange={toggleDarkMode}
+              size={20}
+              
+            />
+          </button>
           {broken && rtl && (
             <IconButton
               sx={{ margin: "0 6 0 2" }}

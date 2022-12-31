@@ -1,21 +1,33 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import { Auth } from "../../contexts/Auth";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 import "./navbar.css";
 
-import { ColorModeContext } from "../../theme";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import { Box, IconButton, useTheme } from "@mui/material";
-
-const Navbar = ({ theme1, setTheme1 }) => {
+const Navbar = () => {
   const { user } = useContext(Auth);
   const [active, setActive] = useState(false);
 
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
+  const [theme1, setTheme1] = useState("dark");
+  useEffect(() => {
+    document.body.className = theme1;
+  }, [theme1]);
+
+  const toggleTheme = () => {
+    if (theme1 === "light") {
+      setTheme1("dark");
+    } else {
+      setTheme1("light");
+    }
+  };
+
+  const [isDarkMode, setDarkMode] = useState(true);
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
 
   const showMenu = () => {
     setActive(!active);
@@ -133,15 +145,16 @@ const Navbar = ({ theme1, setTheme1 }) => {
               </li>
             </Link>
           }
-          <Box>
-            <IconButton onClick={colorMode.toggleColorMode}>
-              {theme.palette.mode === "dark" ? (
-                <LightModeOutlinedIcon />
-              ) : (
-                <DarkModeOutlinedIcon />
-              )}
-            </IconButton>
-          </Box>
+          <li className=" transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 duration-300 cursor-pointer">
+            <button onClick={toggleTheme}>
+              <DarkModeSwitch
+                style={{ marginBottom: ".1rem" }}
+                checked={isDarkMode}
+                onChange={toggleDarkMode}
+                size={20}
+              />
+            </button>
+          </li>
         </ul>
 
         <MenuItems showMenu={showMenu} active={active} />

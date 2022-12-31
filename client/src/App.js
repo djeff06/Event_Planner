@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashbord";
 function App() {
   const { user } = useContext(Auth);
   const [theme, colorMode] = useMode();
+ 
 
   return (
     <BrowserRouter>

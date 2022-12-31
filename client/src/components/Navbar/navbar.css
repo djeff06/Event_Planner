@@ -28,3 +28,18 @@
   }
   
   /*-------- Light Mode-------- */
+  .dark {
+    background: linear-gradient(
+      225deg,
+      #141b2d 50%,
+      rgba(156, 152, 152, 1) 100%,
+      rgba(251, 251, 251, 1) 100%
+    );
+    background-repeat: no-repeat;
+    color: #fff
+  }
+  .light {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    color: black
+  }
