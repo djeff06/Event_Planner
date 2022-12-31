@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require('cors')
 const mongoose = require("mongoose");
 
-const resourceRoutes = require("./routes/Resource");
+const eventRoutes = require("./routes/Event");
 const userRoutes = require("./routes/User");
 
 // Crearting the express app
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 //Registeered routes
-app.use("/api/resources", resourceRoutes);
+app.use("/api/events", eventRoutes);
 app.use("/api/users", userRoutes);
 
 mongoose

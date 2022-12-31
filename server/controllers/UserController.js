@@ -36,4 +36,20 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { login, signup };
+const getUsers = async (req, res) => {
+
+  try {
+    //get all products from data base
+    const allUsers = await User.find({});
+    res.status(200).json(allUsers.map(user =>{
+      return {
+        username: user.username,
+        id: user._id,
+      }
+    }));
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
+module.exports = { getUsers, login, signup };
