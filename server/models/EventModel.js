@@ -22,6 +22,7 @@ const EventSchema = new Schema(
       required: true,
     },
     tags: {
+      ref: "User",
       type: Array,
       required: false,
     },
