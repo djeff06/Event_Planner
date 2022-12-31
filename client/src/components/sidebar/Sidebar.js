@@ -2,9 +2,7 @@
 import { useContext, useState } from "react";
 import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
-
 import { useSidebarContext } from "./sidebarContext";
-
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import { useTheme, Box, Typography, IconButton } from "@mui/material";
@@ -14,17 +12,13 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-/* import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"; */
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-
-/* import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
- */ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-/* import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
- */ import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
+import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
 import { Auth } from "../../contexts/Auth";
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -143,14 +137,6 @@ const MyProSidebar = () => {
                 <div id="circle-avatar" className="text-center mx-auto mb-4">
                   <span className="uppercase">{user.username[0]}</span>
                 </div>
-                {/* <img
-                  className="avater-image"
-                  alt="profile user"
-                  width="100px"
-                  height="100px"
-                  src={""}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                /> */}
               </Box>
               <Box textAlign="center">
                 <Typography

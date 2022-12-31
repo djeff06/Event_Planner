@@ -6,11 +6,11 @@ import { Auth } from "../../contexts/Auth";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import "./navbar.css";
 
-const Navbar = () => {
+const Navbar = ({theme1, setTheme1}) => {
   const { user } = useContext(Auth);
   const [active, setActive] = useState(false);
 
-  const [theme1, setTheme1] = useState("dark");
+
   useEffect(() => {
     document.body.className = theme1;
   }, [theme1]);

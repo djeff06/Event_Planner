@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/login-signup/Login";
 import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { MyProSidebarProvider } from "./components/sidebar/sidebarContext";
 import Topbar from "./components/topbar/Topbar";
 import { ColorModeContext, useMode } from "./theme";
@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashbord";
 function App() {
   const { user } = useContext(Auth);
   const [theme, colorMode] = useMode();
+  const [theme1, setTheme1] = useState("dark");
  
 
   return (
@@ -22,7 +23,7 @@ function App() {
       <>
         <div  style={{ height: "100%", width: "100%" }}>
           
-            {!user && <Navbar/>}
+            {!user && <Navbar theme1={theme1} setTheme1={setTheme1}/>}
             <ColorModeContext.Provider value={colorMode}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
@@ -50,7 +51,7 @@ function App() {
                         user ? (
                           <MyProSidebarProvider>
                             <div>
-                              <Topbar className="h-100 w-100" />
+                              <Topbar theme1={theme1} setTheme1={setTheme1} className="h-100 w-100" />
                               <Dashboard />
                             </div>
                           </MyProSidebarProvider>

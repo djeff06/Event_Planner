@@ -10,8 +10,6 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -23,13 +21,13 @@ import "./dropDownMenu.css";
 
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
-const Topbar = () => {
+const Topbar = ({theme1, setTheme1}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { toggleSidebar, broken, rtl } = useProSidebar();
 
-  const [theme1, setTheme1] = useState("dark");
+  
   useEffect(() => {
     document.body.className = theme1;
   }, [theme1]);
