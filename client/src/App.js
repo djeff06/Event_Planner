@@ -34,16 +34,16 @@ function App() {
                   />{" "}
                   <Route
                     path="/login"
-                    element={!user ? <Login /> : <Navigate to="/user" />}
+                    element={!user ? <Login /> : <Navigate to="/dashboard" />}
                   />
                   <Route
                     path="/signup"
-                    element={!user ? <Signup /> : <Navigate to="/user" />}
+                    element={!user ? <Signup /> : <Navigate to="/dashboard" />}
                   />
                 </Route>
 
                 <Route
-                  path="/user"
+                  path="/dashboard"
                   element={
                     user ? (
                       <MyProSidebarProvider>
@@ -53,10 +53,26 @@ function App() {
                             setTheme1={setTheme1}
                             className="h-100 w-100"
                           />
-                          
-                            <Dashboard />
-                            {/* <Route path="/events" element={<Events />} /> */}
-                         
+                          <Dashboard />
+                        </div>
+                      </MyProSidebarProvider>
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/events"
+                  element={
+                    user ? (
+                      <MyProSidebarProvider>
+                        <div>
+                          <Topbar
+                            theme1={theme1}
+                            setTheme1={setTheme1}
+                            className="h-100 w-100"
+                          />
+                          <Events />
                         </div>
                       </MyProSidebarProvider>
                     ) : (
