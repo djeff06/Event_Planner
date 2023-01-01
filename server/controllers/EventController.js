@@ -28,6 +28,7 @@ const createEvent = async (req, res) => {
 const getEvents = async (req, res) => {
   const id = req.user;
   const events = await Event.find({user_id: id}).populate("tags", "username _id");
+  console.log(events)
 
   res.status(200).json(events);
 };

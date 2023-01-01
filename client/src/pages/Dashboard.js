@@ -15,6 +15,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../components/Header";
 
+
 import StatBox from "../components/StatBox";
 import ProgressCircle from "../components/ProgressCircle";
 
@@ -23,7 +24,7 @@ const Dashboard = () => {
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
   return (
-    <Box m="20px" >
+    <Box m="20px">
       {/* HEADER */}
 
       <Box
@@ -50,9 +51,10 @@ const Dashboard = () => {
           </Button>
         </Box>
       </Box>
-
+     
       {/* GRID & CHARTS */}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width="100%"
