@@ -25,11 +25,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
   return (
     <MenuItem
+    className="hover:"
       active={selected === title}
-      style={{ color: colors.grey[100] }}
+      style={{ color: colors.grey[100]}}
       onClick={() => setSelected(title)}
       icon={icon}
       routerLink={<Link to={to} />}
+     
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -67,11 +69,11 @@ const MyProSidebar = () => {
           backgroundColor: "transparent !important",
         },
         "& .menu-item:hover": {
-          color: `${colors.blueAccent[500]} !important`,
+          color: `${colors.blueAccent[500]} `,
           backgroundColor: "transparent !important",
         },
         "& .menu-item.active": {
-          color: `${colors.greenAccent[500]} !important`,
+          color: `${colors.greenAccent[500]} `,
           backgroundColor: "transparent !important",
         },
       }}

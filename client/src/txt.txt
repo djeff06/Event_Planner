@@ -1,0 +1,6 @@
+const [title, setTitle] = useState("");
+const [date, setDate] = useState("");
+const [duration, setDuration] = useState("");
+const [description, setDescription] = useState("");
+const [tags, setTags] = useState("");
+const { error, isLoading, event } = useEvents();
