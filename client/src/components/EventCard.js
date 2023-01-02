@@ -51,11 +51,11 @@ export default function EventCard() {
 
   return (
     <>
-      <div className="flex flex-row gap-1 w-full ">
+      <div className="flex flex-row gap-2 w-full  ">
         {events.map((event) => {
           return <EventForm event={event} key={event._id} />;
         })}
-      </div>
+      </div> 
     </>
   );
 }
