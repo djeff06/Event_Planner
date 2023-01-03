@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import useFormikForm from "../hooks/useFormikForm";
 import { Auth } from "../contexts/Auth";
 
-
-export const CreatEventForm = ({ setShowModal, setEvents }) => {
+export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
   const { MyTextInput, MySelect, MyCheckbox } = useFormikForm();
   const { user } = useContext(Auth);
+
+
 
   const fetchEvents = async (event) => {
     console.log("event", event);
@@ -24,8 +25,6 @@ export const CreatEventForm = ({ setShowModal, setEvents }) => {
     const backRes = await response.json();
 
     console.log("back rees;", backRes);
-
-    
   };
 
   const fetchAllEvents = async () => {
@@ -35,49 +34,38 @@ export const CreatEventForm = ({ setShowModal, setEvents }) => {
       },
     });
     const events = await response.json();
-    console.log(events)
+    console.log(events);
     setEvents(events);
   };
-
-
+ 
 
   return (
     <div className="flex flex-col w-full">
-      <h1 className="text-5xl font-bold">Subscribe!</h1>
       <Formik
         initialValues={{
           title: "",
-          // date: "",
+          date: "",
           duration: "",
           description: "",
-          role: "",
+          participants: [],
         }}
         validationSchema={Yup.object({
           title: Yup.string()
             .max(30, "Must be 15 characters or less")
             .required("Required"),
-          duration: Yup.number()
-            .max(20, "Must be 20 characters or less")
+          date: Yup.date()
             .required("Required"),
+          duration: Yup.number().required("Required"),
           description: Yup.string()
             .min(20, "Must be 20 characters or more")
             .required("Required"),
-          acceptedTerms: Yup.boolean()
-            .required("Required")
-            .oneOf([true], "You must accept the terms and conditions."),
-          role: Yup.string()
-            .oneOf(["designer", "costumer"])
-            .required("Required"),
+          participants: Yup.array().required("Required"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           const event = { ...values };
-        
           fetchEvents(event);
-          fetchAllEvents()
-          setShowModal(false)
-
-          /* await signup(user);
-            setSubmitting(false); */
+          fetchAllEvents();
+          setShowModal(false);
         }}
       >
         <Form>
@@ -86,6 +74,13 @@ export const CreatEventForm = ({ setShowModal, setEvents }) => {
             label="Title"
             name="title"
             type="text"
+            placeholder="title of event"
+          />
+          <MyTextInput
+            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            label="Date"
+            name="date"
+            type="date"
             placeholder="title of event"
           />
 
@@ -105,12 +100,16 @@ export const CreatEventForm = ({ setShowModal, setEvents }) => {
           />
           <MySelect
             className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
-            label="Role"
-            name="role"
+            label="Participants"
+            name="participants"
+            
           >
-            <option value="">Select a Role</option>
-            <option value="designer">Designer</option>
-            <option value="development">Costumer</option>
+            <option value="">Select participants</option>
+            {users.map((user)=>{
+            
+
+            return     <option key={user.username} value={user.id}>{user.username}</option>
+            })}
           </MySelect>
           <MyCheckbox className="checkbox checkbox-sm" name="acceptedTerms">
             I accept the terms and conditions

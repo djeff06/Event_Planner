@@ -31,6 +31,7 @@ const ExpandMore = styled((props) => {
 
 export default function EventForm({ event }) {
   const [expanded, setExpanded] = React.useState(false);
+  console.log(event.date)
 
   const { user } = useContext(Auth);
 

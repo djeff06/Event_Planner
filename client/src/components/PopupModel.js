@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "../contexts/Auth";
 import { CreatEventForm } from "./CreatEventForm";
 
@@ -14,6 +14,23 @@ export default function PopupModel({showModal, setShowModal,setEvents }) {
  
     setShowModal(false);
   };
+
+  const [users,setUsers] = useState([])
+  const fetchAllUsers = async () => {
+    const response = await fetch("/api/users", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const users = await response.json();
+    console.log(users);
+    setUsers(users);
+  };
+  useEffect(() => {
+    fetchAllUsers()
+  }, [])
+  
+ 
   return (
     <>
       {showModal ? (
@@ -31,7 +48,7 @@ export default function PopupModel({showModal, setShowModal,setEvents }) {
                 {/*body*/}
 
                 <div className="relative px-3 flex w-full ">
-                  <CreatEventForm setShowModal={setShowModal}setEvents={setEvents}/>
+                  <CreatEventForm users={users} setShowModal={setShowModal}setEvents={setEvents}/>
                 </div>
 
                 {/*footer*/}

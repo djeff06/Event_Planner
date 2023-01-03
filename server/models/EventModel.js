@@ -21,7 +21,7 @@ const EventSchema = new Schema(
       type: String,
       required: true,
     },
-    tags: {
+    participants: {
       ref: "User",
       type: Array,
       required: false,
@@ -35,7 +35,7 @@ EventSchema.statics.cardEvents = async function (
   date,
   duration,
   description,
-  tags
+  participants
 ){
   //Validating username, email and password
 
@@ -51,11 +51,11 @@ EventSchema.statics.cardEvents = async function (
     throw Error("Please use a strong password");
   }
 
-  if (!validator.isArray(tags)) {
+  if (!validator.isArray(participants)) {
     throw new Error("Please use a valid character");
   }
 
-  const userExists = await this.findOne({ tags });
+  const userExists = await this.findOne({ participants });
 
   if (userExists) {
     throw Error("user already exists!");
@@ -63,7 +63,7 @@ EventSchema.statics.cardEvents = async function (
 
   
 
-  const event = await this.create({ title, date, duration, description, tags});
+  const event = await this.create({ title, date, duration, description, participants});
 
   return event;
 };

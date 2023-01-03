@@ -6,7 +6,7 @@ const User = require("../models/UserModel");
 
 
 const createEvent = async (req, res) => {
-  const { title, date, duration,description,tags } = req.body;
+  const { title, date, duration,description,participants } = req.body;
   console.log(req.body)
 
   //add to a database
@@ -16,7 +16,7 @@ const createEvent = async (req, res) => {
       date,
       duration,
       description,
-      tags,
+      participants,
       /* user_id: req.user._id, */
     });
     res.status(201).json(event);
@@ -28,7 +28,7 @@ const createEvent = async (req, res) => {
 // Read all Events
 const getEvents = async (req, res) => {
   const id = req.user;
-  const events = await Event.find({user_id: id}).populate("tags", "username _id");
+  const events = await Event.find({user_id: id}).populate("participants", "username _id");
   console.log(events)
 
   res.status(200).json(events);
