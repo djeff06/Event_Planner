@@ -7,6 +7,7 @@ const User = require("../models/UserModel");
 
 const createEvent = async (req, res) => {
   const { title, date, duration,description,tags } = req.body;
+  console.log(req.body)
 
   //add to a database
   try {

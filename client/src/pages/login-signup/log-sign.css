@@ -108,7 +108,7 @@
 
 .dark label {
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
   padding-bottom: 0.5rem;
   color: rgba(88, 85, 85, 0.9);
 }

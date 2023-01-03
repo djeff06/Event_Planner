@@ -4,12 +4,39 @@ import { tokens } from "../theme";
 import CreateIcon from "@mui/icons-material/Create";
 import Header from "../components/Header";
 import EventCard from "../components/EventCard";
+import { useContext, useEffect, useState } from "react";
+import PopupModel from "../components/PopupModel";
+import { Auth } from "../contexts/Auth";
 
 
 const Events = () => {
+  const { user } = useContext(Auth);
+  const [events, setEvents] = useState([]);
+
+ 
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const fetchEvents = async () => {
+      const response = await fetch("/api/events", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const events = await response.json();
+      console.log(events)
+      setEvents(events);
+    };
+
+    fetchEvents();
+  }, [user]);
+
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
+  const [showModal, setShowModal] = useState(false);
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -32,10 +59,12 @@ const Events = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
+            onClick={()=>setShowModal(true)}
           >
             <CreateIcon sx={{ mr: "10px" }} />
             Create new Event
           </Button>
+          
         </Box>
       </Box>
 
@@ -48,10 +77,15 @@ const Events = () => {
         rowSpacing={1}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        <Grid xs={12} sm={12} md={6}>
-          <EventCard />
+        <Grid xs={12} sm={12} md={12}  lg={12}>
+          <EventCard events={events}/>
         </Grid>
       </Grid>
+      <PopupModel
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setEvents={setEvents}
+      />
     </Box>
   );
 };

@@ -39,7 +39,7 @@ export default function EventForm({ event }) {
   };
   return (
     <div>
-      <Card sx={{ maxWidth: 345, bgcolor: "transparent" }}>
+      <Card sx={{ minWidth: 345 ,maxWidth: 345, bgcolor: "transparent" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
