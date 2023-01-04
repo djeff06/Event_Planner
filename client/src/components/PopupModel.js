@@ -5,16 +5,6 @@ import { CreatEventForm } from "./CreatEventForm";
 
 export default function PopupModel({showModal, setShowModal,setEvents }) {
   const { user } = useContext(Auth);
-
-  const handelDeletDesign = async () => {
-    await fetch({
-     
-    });
-    //fetch and update global state with new list without the deleted product
- 
-    setShowModal(false);
-  };
-
   const [users,setUsers] = useState([])
   const fetchAllUsers = async () => {
     const response = await fetch("/api/users", {
@@ -23,7 +13,6 @@ export default function PopupModel({showModal, setShowModal,setEvents }) {
       },
     });
     const users = await response.json();
-    console.log(users);
     setUsers(users);
   };
   useEffect(() => {

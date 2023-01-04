@@ -26,7 +26,6 @@ const Events = () => {
         },
       });
       const events = await response.json();
-      console.log(events)
       setEvents(events);
     };
 

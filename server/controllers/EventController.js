@@ -7,7 +7,6 @@ const User = require("../models/UserModel");
 
 const createEvent = async (req, res) => {
   const { title, date, duration,description,participants } = req.body;
-  console.log(req.body)
 
   //add to a database
   try {
@@ -29,8 +28,6 @@ const createEvent = async (req, res) => {
 const getEvents = async (req, res) => {
   const id = req.user;
   const events = await Event.find({user_id: id}).populate("participants", "username _id");
-  console.log(events)
-
   res.status(200).json(events);
 };
 

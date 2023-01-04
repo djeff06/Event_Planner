@@ -8,25 +8,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { error, isLoading, login } = useLogin();
-  /*  const [ profile, setProfile ] = useState([]);
-  const clientId =
-    "1093637141452-v7ettovlkuta399c0n71dcu6sfdfbte9.apps.googleusercontent.com";
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
-  });
-  const onSuccess = (res) => {
-    setProfile(res.profileObj);
-
-  };
-  const onFailure = (err) => {
-    console.log("failed:", err);
-  }; */
 
   const handelLogin = async () => {
     await login(email, password);

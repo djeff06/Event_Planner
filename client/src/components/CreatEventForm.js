@@ -18,7 +18,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
   const fetchEvents = async (event) => {
     try {
-      console.log("event", event);
       const response = await fetch("/api/events/", {
         method: "POST",
         headers: {
@@ -28,8 +27,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
         body: JSON.stringify(event),
       });
-      const backRes = await response.json();
-      console.log("back rees;", backRes);
+      console.log(response)
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +41,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
         },
       });
       const events = await response.json();
-      console.log(events);
       setEvents(events);
     } catch (error) {
       console.log("get error", error)
@@ -136,7 +133,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
           fetchEvents(event);
           fetchAllEvents();
           setShowModal(false);
-          console.log(event);
         }}
       >
         <Form>
