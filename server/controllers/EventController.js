@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Types } = require("mongoose");
 const Event = require("../models/EventModel");
 const User = require("../models/UserModel");
 
@@ -15,7 +15,7 @@ const createEvent = async (req, res) => {
       date,
       duration,
       description,
-      participants,
+      participants: participants.map((part) => new Types.ObjectId(part)),
       /* user_id: req.user._id, */
     });
     res.status(201).json(event);

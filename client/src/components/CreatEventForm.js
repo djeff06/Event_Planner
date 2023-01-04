@@ -10,7 +10,7 @@ import Select from "react-select";
 export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
   const array = [];
   users.map((user) => {
-    return array.push({ value: `${user.username}`, label: `${user.username}` });
+    return array.push({ value: `${user.id}`, label: `${user.username}` });
   });
 
   const { MyTextInput } = useFormikForm();

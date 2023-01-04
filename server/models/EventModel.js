@@ -22,7 +22,7 @@ const EventSchema = new Schema(
       required: true,
     },
     participants: {
-      /* ref: "User", */
+      ref: "User", 
       type: [String],
       required: false,
     },
