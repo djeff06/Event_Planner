@@ -19,6 +19,7 @@
     "react-pro-sidebar": "^1.0.0-alpha.9",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.0",
     "react-simple-widgets": "^6.7.0",
     "react-toggle-dark-mode": "^1.1.1",
     "web-vitals": "^2.1.4",
