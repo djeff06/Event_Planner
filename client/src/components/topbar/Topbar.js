@@ -92,6 +92,7 @@ const Topbar = ({theme1, setTheme1}) => {
           justifyContent="space-between"
           alignItems="center"
           ml="15px"
+          mr="auto"
         >
           <Typography fontWeight="bold" variant="h1" color={colors.grey[100]}>
             Event Planner

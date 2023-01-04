@@ -47,7 +47,7 @@ function App() {
                   element={
                     user ? (
                       <MyProSidebarProvider>
-                        <div>
+                        <div className="w-full">
                           <Topbar
                             theme1={theme1}
                             setTheme1={setTheme1}
@@ -66,7 +66,7 @@ function App() {
                   element={
                     user ? (
                       <MyProSidebarProvider>
-                        <div>
+                        <div className="w-full">
                           <Topbar
                             theme1={theme1}
                             setTheme1={setTheme1}
