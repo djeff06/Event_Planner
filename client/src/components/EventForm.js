@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -14,10 +14,11 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PopupDelete from "./PopupDelete";
 
 import { Auth } from "../contexts/Auth";
 import Moment from "moment";
-import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText, Menu, MenuItem } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,22 +31,59 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function EventForm({ event }) {
-  const [expanded, setExpanded] = React.useState(false);
-
+export default function EventForm({ event, setEvents }) {
   const { user } = useContext(Auth);
+  const participants = event.participants;
+  const [showModal, setShowModal] = useState(false);
 
+  const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  function generate(element) {
+
+  /*   function generate(element) {
     return [0, 1, 2].map((value) =>
       React.cloneElement(element, {
         key: value,
       })
     );
-  }
-  const participants = event.participants;
+  } */
+
+  // profile menu
+
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const dummyMenuItems = [
+    {
+      id: 1,
+      title: (
+        <div className="d-grid">
+          <button className="btn btn-secondary ">
+            <big>Edit</big>
+          </button>
+        </div>
+      ),
+    },
+    {
+      id: 2,
+      title: (
+        <div className="d-grid">
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-secondary "
+          >
+            <big>Delete</big>
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -57,7 +95,13 @@ export default function EventForm({ event }) {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <IconButton
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+              aria-label="settings"
+              title="Settings"
+            >
               <MoreVertIcon />
             </IconButton>
           }
@@ -65,6 +109,25 @@ export default function EventForm({ event }) {
           subheader={`created At: ${Moment(event.createdAt).format(
             "DD-MM-YYYY"
           )}`}
+        />
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {dummyMenuItems.map((item) => (
+            <MenuItem onClick={handleClose} key={item.id} value={item.title}>
+              {item.title}
+            </MenuItem>
+          ))}
+        </Menu>
+        <PopupDelete
+          event={event}
+          setEvents={setEvents}
+          showModal={showModal}
+          setShowModal={setShowModal}
         />
         <Typography marginLeft={2} variant="body1" color="text.primary">
           {event.title}
@@ -101,24 +164,24 @@ export default function EventForm({ event }) {
 
             <List>
               {/* {generate( */}
-                <ListItem
-                /* secondaryAction={
+              <ListItem
+              /* secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                       <DeleteIcon />
                     </IconButton>
                   } */
-                >
-                  {/* <ListItemAvatar>
+              >
+                {/* <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar> */}
-                  <ListItemText
-                    primary={participants.map((participant) => (
-                      <li key={participant.id}>{participant.username}</li>
-                    ))}
-                  />
-                </ListItem>
+                <ListItemText
+                  primary={participants.map((participant) => (
+                    <li key={participant.id}>{participant.username}</li>
+                  ))}
+                />
+              </ListItem>
               {/* )} */}
             </List>
           </CardContent>

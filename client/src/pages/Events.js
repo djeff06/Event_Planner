@@ -13,8 +13,6 @@ const Events = () => {
   const { user } = useContext(Auth);
   const [events, setEvents] = useState([]);
 
- 
-
   useEffect(() => {
     if (!user) {
       return;
@@ -58,12 +56,11 @@ const Events = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={()=>setShowModal(true)}
+            onClick={() => setShowModal(true)}
           >
             <CreateIcon sx={{ mr: "10px" }} />
             Create new Event
           </Button>
-          
         </Box>
       </Box>
 
@@ -76,8 +73,8 @@ const Events = () => {
         rowSpacing={1}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        <Grid xs={12} sm={12} md={12}  lg={12}>
-          <EventCard events={events}/>
+        <Grid xs={12} sm={12} md={12} lg={12}>
+          <EventCard events={events} setEvents={setEvents} />
         </Grid>
       </Grid>
       <PopupModel
@@ -85,6 +82,7 @@ const Events = () => {
         setShowModal={setShowModal}
         setEvents={setEvents}
       />
+      
     </Box>
   );
 };

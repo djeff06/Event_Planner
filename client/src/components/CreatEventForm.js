@@ -15,6 +15,16 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
+  console.log(user.username) 
+
+  const array2=[];
+  array.map((ar)=>{
+    if(user.username !== ar.label){
+      return array2.push({ value: `${ar.value}`, label: `${ar.label}` });
+    } else {
+      return array2
+    }
+  })
 
   const fetchEvents = async (event) => {
     try {
@@ -174,7 +184,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
             placeholder="Participants"
             isMulti={true}
             component={MultiSelect}
-            options={array}
+            options={array2}
           />
 
          
