@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { Auth } from "../contexts/Auth";
 import Moment from "moment";
+import { List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,9 +38,18 @@ export default function EventForm({ event }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  function generate(element) {
+    return [0, 1, 2].map((value) =>
+      React.cloneElement(element, {
+        key: value,
+      })
+    );
+  }
+  const participants = event.participants;
+
   return (
     <div>
-      <Card sx={{ minWidth: 345 ,maxWidth: 345, bgcolor: "transparent" }}>
+      <Card sx={{ minWidth: 345, maxWidth: 345, bgcolor: "transparent" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -85,8 +95,32 @@ export default function EventForm({ event }) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Description</Typography>
+            <Typography>Description :</Typography>
             <Typography paragraph>{event.description}</Typography>
+            <Typography>Participants :</Typography>
+
+            <List>
+              {/* {generate( */}
+                <ListItem
+                /* secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  } */
+                >
+                  {/* <ListItemAvatar>
+                    <Avatar>
+                      <FolderIcon />
+                    </Avatar>
+                  </ListItemAvatar> */}
+                  <ListItemText
+                    primary={participants.map((participant) => (
+                      <li key={participant.id}>{participant.username}</li>
+                    ))}
+                  />
+                </ListItem>
+              {/* )} */}
+            </List>
           </CardContent>
         </Collapse>
       </Card>
