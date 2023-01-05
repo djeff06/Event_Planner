@@ -50,19 +50,49 @@ const getEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   const { id } = req.params;
+  const update = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Event not found!" });
   }
+  try {
+    const event = await Event.findById({ _id: id });
 
-  const event = await Event.findByIdAndUpdate({ _id: id }, { ...req.body });
+    if (!event) {
+      return res.status(404).json({ error: "Event not found!" });
+    }
 
-  if (!event) {
+    if (update.title) {
+      event.title = update.title;
+    }
+    if (update.date) {
+      event.date = update.date;
+    }
+
+    if (update.duration) {
+      event.duration = update.duration;
+    }
+    if (update.description) {
+      event.description = update.description;
+    }
+    if (update.participants) {
+      event.participants = update.participants;
+    }
+
+    await event.save();
+    console.log("updated event", event);
+    return res.status(200).json(event);
+  } catch (err) {
+    res.status(400).json({ err: true, message: err.message });
+  }
+};
+
+  /* if (!event) {
     return res.status(404).json({ error: "Event not found!" });
   }
 
   res.status(200).json(event);
-};
+}; */
 
 const deleteEvent = async (req, res) => {
   const { id } = req.params;

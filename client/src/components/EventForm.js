@@ -19,6 +19,7 @@ import PopupDelete from "./PopupDelete";
 import { Auth } from "../contexts/Auth";
 import Moment from "moment";
 import { List, ListItem, ListItemText, Menu, MenuItem } from "@mui/material";
+import PopupUpdateEvent from "./PopupUpdateEvent";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -35,6 +36,7 @@ export default function EventForm({ event, setEvents }) {
   const { user } = useContext(Auth);
   const participants = event.participants;
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -51,7 +53,6 @@ export default function EventForm({ event, setEvents }) {
 
   // profile menu
 
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -64,7 +65,10 @@ export default function EventForm({ event, setEvents }) {
       id: 1,
       title: (
         <div className="d-grid">
-          <button className="btn btn-secondary ">
+          <button
+            onClick={() => setShowModal2(true)}
+            className="btn btn-secondary "
+          >
             <big>Edit</big>
           </button>
         </div>
@@ -128,6 +132,12 @@ export default function EventForm({ event, setEvents }) {
           setEvents={setEvents}
           showModal={showModal}
           setShowModal={setShowModal}
+        />
+        <PopupUpdateEvent
+          event={event}
+          showModal={showModal2}
+          setShowModal={setShowModal2}
+          setEvents={setEvents}
         />
         <Typography marginLeft={2} variant="body1" color="text.primary">
           {event.title}
