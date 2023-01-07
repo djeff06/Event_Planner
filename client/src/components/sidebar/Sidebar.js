@@ -139,6 +139,9 @@ const MyProSidebar = () => {
                 <div id="circle-avatar" className="text-center mx-auto mb-4">
                   <span className="uppercase">{user.username[0]}</span>
                 </div>
+                 
+                  
+                
               </Box>
               <Box textAlign="center">
                 <Typography

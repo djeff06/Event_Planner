@@ -96,6 +96,8 @@ const Dashboard = () => {
               }
             />
           </Box>
+          <input type ="file " className="uppercase"></input>
+
         </Grid>
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box

@@ -5,13 +5,14 @@ import Home from "./pages/Home";
 import Login from "./pages/login-signup/Login";
 import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
-import React, { useContext, useState } from "react";
+import React, { Profiler, useContext, useState } from "react";
 import { MyProSidebarProvider } from "./components/sidebar/sidebarContext";
 import Topbar from "./components/topbar/Topbar";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
+import Profile from "./pages/Profile";
 
 function App() {
   const { user } = useContext(Auth);
@@ -73,6 +74,25 @@ function App() {
                             className="h-100 w-100"
                           />
                           <Events />
+                        </div>
+                      </MyProSidebarProvider>
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    user ? (
+                      <MyProSidebarProvider>
+                        <div className="w-full">
+                          <Topbar
+                            theme1={theme1}
+                            setTheme1={setTheme1}
+                            className="h-100 w-100"
+                          />
+                          <Profile />
                         </div>
                       </MyProSidebarProvider>
                     ) : (

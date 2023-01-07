@@ -20,14 +20,14 @@ import { useLogout } from "../../hooks/UseLogout";
 import "./dropDownMenu.css";
 
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { Link } from "react-router-dom";
 
-const Topbar = ({theme1, setTheme1}) => {
+const Topbar = ({ theme1, setTheme1 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { toggleSidebar, broken, rtl } = useProSidebar();
 
-  
   useEffect(() => {
     document.body.className = theme1;
   }, [theme1]);
@@ -66,9 +66,11 @@ const Topbar = ({theme1, setTheme1}) => {
       id: 1,
       title: (
         <div className="d-grid">
-          <button className="btn btn-secondary ">
-            <big>Profile</big>
-          </button>
+          <Link to="/profile">
+            <button className="btn btn-secondary ">
+              <big>Profile</big>
+            </button>
+          </Link>
         </div>
       ),
     },
@@ -148,12 +150,16 @@ const Topbar = ({theme1, setTheme1}) => {
               </MenuItem>
             ))}
           </Menu>
-          <button onClick={toggleTheme} checked={isDarkMode} onChange={toggleDarkMode} className={"pl-5"}>
+          <button
+            onClick={toggleTheme}
+            checked={isDarkMode}
+            onChange={toggleDarkMode}
+            className={"pl-5"}
+          >
             <DarkModeSwitch
               checked={isDarkMode}
               onChange={toggleDarkMode}
               size={20}
-              
             />
           </button>
           {broken && rtl && (
