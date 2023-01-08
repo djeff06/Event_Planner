@@ -17,6 +17,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { Auth } from "../../contexts/Auth";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -25,13 +26,12 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
   return (
     <MenuItem
-    className="hover:"
+      className="hover:"
       active={selected === title}
-      style={{ color: colors.grey[100]}}
+      style={{ color: colors.grey[100] }}
       onClick={() => setSelected(title)}
       icon={icon}
       routerLink={<Link to={to} />}
-     
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -137,11 +137,26 @@ const MyProSidebar = () => {
                 }}
               >
                 <div id="circle-avatar" className="text-center mx-auto mb-4">
+                  <div
+                    as="label"
+                    htmlFor="inputImg"
+                    // style={backgroundColor={colors.primary[400]} }
+                    // 
+                    className={`bg-slate-400 flex justify-center items-center m-0 absolute rounded-full mt-20 hover:scale-150 transition ease-in-out duration-300 ml-20`}
+                  >
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
+                      
+                    >
+                      <input hidden accept="image/*" type="file" />
+                      <AddAPhotoIcon />
+                    </IconButton>
+                  </div>
+
                   <span className="uppercase">{user.username[0]}</span>
                 </div>
-                 
-                  
-                
               </Box>
               <Box textAlign="center">
                 <Typography
