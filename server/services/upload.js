@@ -19,6 +19,7 @@ const createS3Bucket = async () => {
 
 
 const getUploadPresignedUrl = async (filename, oldKey) => {
+  console.log("this is from services", filename)
   const key =
     oldKey ||
     crypto.randomBytes(24).toString("hex") + (filename ? "-" + filename : "");
