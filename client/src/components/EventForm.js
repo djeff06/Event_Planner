@@ -109,7 +109,7 @@ export default function EventForm({ event, setEvents }) {
               <MoreVertIcon />
             </IconButton>
           }
-          title={`Organizer:  ${user.username}`}
+          title={`Organizer:  ${user.postedBy}`}
           subheader={`created At: ${Moment(event.createdAt).format(
             "DD-MM-YYYY"
           )}`}
@@ -188,7 +188,7 @@ export default function EventForm({ event, setEvents }) {
                   </ListItemAvatar> */}
                 <ListItemText
                   primary={participants.map((participant) => (
-                    <li key={participant.id}>{participant.username}</li>
+                    <span className="text-sm" key={participant.id}>{participant.username}</span>
                   ))}
                 />
               </ListItem>

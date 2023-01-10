@@ -45,11 +45,9 @@ const createEvent = async (req, res) => {
 
 // Read all Events
 const getEvents = async (req, res) => {
-  const {username} = req.user;
-  console.log("username",username);
-
+  const {username, id} = req.user;
   try {
-    const events = await Event.find({ postedBy: username });
+    const events = await Event.find({$or:[{postedBy: username}, {participants: id}]});
     console.log("events",events)
     res.status(200).json(events);
   } catch (err) {
