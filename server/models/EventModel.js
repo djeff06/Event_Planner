@@ -26,6 +26,10 @@ const EventSchema = new Schema(
       type: [String],
       required: false,
     },
+    postedBy: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -35,7 +39,8 @@ EventSchema.statics.cardEvents = async function (
   date,
   duration,
   description,
-  participants
+  participants,
+  postedBy,
 ){
   //Validating username, email and password
 
@@ -63,7 +68,7 @@ EventSchema.statics.cardEvents = async function (
 
   
 
-  const event = await this.create({ title, date, duration, description, participants});
+  const event = await this.create({ title, date, duration, description, participants,postedBy});
 
   return event;
 };

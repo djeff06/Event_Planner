@@ -13,7 +13,7 @@ const checkAuth = async (req, res, next) => {
   const { _id } = jwt.verify(token, process.env.JWT_SECRET);
 
   try {
-    const user = await User.findById({ _id }).select("_id");
+    const user = await User.findById({ _id }).select("username _id");
     req.user = user;
     console.log(user);
     next();
