@@ -18,7 +18,9 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+
 import { Auth } from "../../contexts/Auth";
+import axios from "axios";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -42,9 +44,45 @@ const MyProSidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selected, setSelected] = useState("Dashboard");
+  const [avatar, setAvatar] = useState("");
   const { sidebarRTL, setSidebarRTL, sidebarImage } = useSidebarContext();
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
   const { user } = useContext(Auth);
+
+  const uploadImg = async (e) => {
+    // data for submit
+    const image = e.target.files[0];
+    console.log("upload image", image);
+    const upImg = URL.createObjectURL(image);
+    setAvatar(upImg);
+    console.log(upImg);
+
+    if (!image) {
+      return null;
+    }
+    const newTitle = image.name.replaceAll(" ", "").toLowerCase();
+
+    const response = await fetch(`api/uploadURL/${newTitle}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    console.log(data);
+    const { put, get, key } = data;
+    await axios.put(put,image)
+    
+   /*  try {
+      await fetch(get, {
+        method: "GET",
+        body: JSON.stringify(image),
+        
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+     */
+    // sendDAtaToDAtaBase(key);
+  };
+
   return (
     <Box
       sx={{
@@ -140,22 +178,27 @@ const MyProSidebar = () => {
                   <div
                     as="label"
                     htmlFor="inputImg"
-                    // style={backgroundColor={colors.primary[400]} }
-                    // 
                     className={`bg-slate-400 flex justify-center items-center m-0 absolute rounded-full mt-20 hover:scale-150 transition ease-in-out duration-300 ml-20`}
                   >
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
                       component="label"
-                      
                     >
-                      <input hidden accept="image/*" type="file" />
+                      <input
+                        hidden
+                        accept="image/png"
+                        type="file"
+                        onChange={uploadImg}
+                      />
                       <AddAPhotoIcon />
                     </IconButton>
                   </div>
-
-                  <span className="uppercase">{user.username[0]}</span>
+                  {avatar ? (
+                    <img id="circle-avatar" src={avatar && avatar} alt=""></img>
+                  ) : (
+                    <span className="uppercase">{user.username[0]}</span>
+                  )}
                 </div>
               </Box>
               <Box textAlign="center">

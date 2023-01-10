@@ -1,31 +1,29 @@
-import React, { useContext } from "react";
-import ImageUploading from "react-images-uploading";
+import React, { useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
-import { Auth } from "../contexts/Auth";
+import { IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export function UploadImage() {
-  const [images, setImages] = React.useState([]);
-  const [image, setImage] = React.useState([]);
-  const maxNumber = 69;
+  const [avatar, setAvatar] = useState("");
 
-  const user = useContext(Auth);
+  // const removeImg = () => {};
 
-  const onChange = (imageList, addUpdateIndex) => {
+  const uploadImg = async (e) => {
     // data for submit
-    console.log(addUpdateIndex);
-    setImages(imageList);
-    setImage(imageList[0]);
-    console.log(image);
-  };
 
-  const handelSubmit = async () => {
+
+    const image = e.target.files[0];
+    // console.log("upload image", image);
+    const upImg = URL.createObjectURL(image);
+    setAvatar(upImg);
+    // console.log(upImg);
+
     if (!image) {
       return null;
     }
-    const newTitle = `${image.file.name
-      .replaceAll(" ", "")
-      .toLowerCase()}${uuidv4()}`;
+    const newTitle = image.name.replaceAll(" ", "").toLowerCase();
 
     const response = await fetch(`api/uploadURL/${newTitle}`, {
       method: "GET",
@@ -33,59 +31,62 @@ export function UploadImage() {
     const data = await response.json();
     console.log(data);
     const { put, get, key } = data;
-    try {
-      await fetch(put, {
-        method: "PUT",
+    await axios.put(put, image);
+
+    /*  try {
+      await fetch(get, {
+        method: "GET",
         body: JSON.stringify(image),
+        
       });
     } catch (error) {
       console.log("error", error);
     }
+     */
     // sendDAtaToDAtaBase(key);
   };
 
   return (
-    <div className="App h-10px border">
-      <ImageUploading
-        multiple
-        value={images}
-        onChange={onChange}
-        maxNumber={maxNumber}
-        dataURLKey="data_url"
-      >
-        {({
-          imageList,
-          onImageUpload,
-          onImageRemoveAll,
-          onImageUpdate,
-          onImageRemove,
-          isDragging,
-          dragProps,
-        }) => (
-          // write your building UI
-          <div className="upload__image-wrapper">
-            <button
-              style={isDragging ? { color: "red" } : undefined}
-              onClick={onImageUpload}
-              {...dragProps}
-            >
-              Click or Drop here
-            </button>
-            &nbsp;
-            <button onClick={onImageRemoveAll}>Remove all images</button>
-            {imageList.map((image, index) => (
-              <div key={index} className="image-item">
-                <img src={image["data_url"]} alt="" width="100" />
-                <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => onImageRemove(index)}>Remove</button>
-                  <button onClick={() => handelSubmit()}>submit</button>
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className=" mb-10  text-center bg-slate-500 mb-4">
+      <div className="flex justify-center items-center h-56 w-96">
+        {avatar ? (
+          <img className="h-56 w-96" src={avatar && avatar} alt=""></img>
+        ) : (
+          <AccountCircleIcon />
         )}
-      </ImageUploading>
+      </div>
+      <div className="flex">
+        <div
+          as="label"
+          htmlFor="inputImg"
+          className={`flex justify-center items-center m-auto hover:scale-150 transition ease-in-out duration-300`}
+        >
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+          >
+            <input hidden accept="image/png" type="file" onChange={uploadImg} />
+            UPLOAD <AddIcon />
+          </IconButton>
+        </div>
+        <div
+          as="label"
+          htmlFor="inputImg"
+          className={`flex justify-center items-center mx-auto my-5 hover:scale-150 transition ease-in-out duration-300`}
+        >
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+            onClick={() => {
+              setAvatar("");
+            }}
+          >
+            REMOVE <RemoveIcon />
+          </IconButton>
+        </div>
+      </div>
     </div>
   );
 }

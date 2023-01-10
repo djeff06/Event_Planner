@@ -2,11 +2,30 @@ const { default: mongoose, Types } = require("mongoose");
 const Event = require("../models/EventModel");
 const User = require("../models/UserModel");
 
+// check creator
+const getAndCheckOwnership = async (id, username) => {
+  try {
+    const event = await Event.findById(id);
+    console.log("event found", event);
+    if (!event) {
+      return res.status(404).json({ message: "event not found!" });
+      throw new Error("event not found!");
+    }
+
+    // Check whether this resource belongs to the signed in user
+    if (!(event.postedBy == username)) {
+      throw new Error("You're not authorized to do this!");
+    }
+    console.log("event to be returned", event);
+    return event;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 // Create a Event
-
-
 const createEvent = async (req, res) => {
-  const { title, date, duration,description,participants } = req.body;
+  const { title, date, duration, description, participants } = req.body;
 
   //add to a database
   try {
@@ -26,8 +45,13 @@ const createEvent = async (req, res) => {
 
 // Read all Events
 const getEvents = async (req, res) => {
-  const id = req.user;
-  const events = await Event.find({user_id: id}).populate("participants", "username _id");
+  const id = req.params;
+  const username = req.user
+  const events = await getAndCheckOwnership({ id, username });
+  if (events) {
+    res.status(200).json(events);
+  }
+  await Event.find({ user_id: id }).populate("participants", "username _id");
   res.status(200).json(events);
 };
 
@@ -49,14 +73,16 @@ const getEvent = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
-  const { id } = req.params;
+  const { id  } = req.params;
   const update = req.body;
+  const { username } = req.user;
+
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Event not found!" });
   }
   try {
-    const event = await Event.findById({ _id: id });
+    const event = await getAndCheckOwnership(id, username);
 
     if (!event) {
       return res.status(404).json({ error: "Event not found!" });
@@ -87,7 +113,7 @@ const updateEvent = async (req, res) => {
   }
 };
 
-  /* if (!event) {
+/* if (!event) {
     return res.status(404).json({ error: "Event not found!" });
   }
 
@@ -96,17 +122,18 @@ const updateEvent = async (req, res) => {
 
 const deleteEvent = async (req, res) => {
   const { id } = req.params;
+  const { username } = req.user;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Event not found!" });
   }
 
-  const event = await Event.findByIdAndDelete(id);
+  const event = await getAndCheckOwnership(id, username);
 
   if (!event) {
     return res.status(404).json({ error: "Event not found!" });
   }
-
+  await Event.deleteOne({ _id: id });
   res.status(200).json(event);
 };
 

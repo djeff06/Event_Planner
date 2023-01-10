@@ -1,7 +1,7 @@
 const { default: mongoose, Types } = require("mongoose");
 const { getUploadPresignedUrl } = require("../services/upload");
 
-const getUpload = async (req, res) => {``
+const getUpload = async (req, res) => {
     const { filename } = req.params;
     console.log("file name", filename)
     const response = await getUploadPresignedUrl(filename);
