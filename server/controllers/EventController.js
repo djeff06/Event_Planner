@@ -4,31 +4,25 @@ const User = require("../models/UserModel");
 
 const getAndCheckOwnership = async (id, username) => {
 
-
-  console.log("id",id)
-  console.log("username",username)
-  /* try {
-    const events = await Event.findById({id});
-    console.log("events found", events);
-    if (!events) {
-      return res.status(404).json({ message: "product not found!" });
-      // throw new Error("Product not found!");
+  try {
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({ message: "event not found!" });
     }
 
     // Check whether this resource belongs to the signed in user
-    if (!(events.postedBy == user_username)) {
+    if (event.postedBy !== username) {
       throw new Error("You're not authorized to do this!");
     }
-    console.log("product to be returned", events);
-    return events;
+    return event;
   } catch (error) {
-    console.log(error)
-  } */
+    throw new Error(error);
+  }
 };
 
 // Create a Event
 const createEvent = async (req, res) => {
-  const { title, date, duration, description, participants, postedBy } = req.body;
+  const { title, date, duration, description, participants } = req.body;
   const {username}=req.user
 
   //add to a database
@@ -112,34 +106,30 @@ const updateEvent = async (req, res) => {
     }
 
     await event.save();
-    console.log("updated event", event);
     return res.status(200).json(event);
   } catch (err) {
     res.status(400).json({ err: true, message: err.message });
   }
 };
 
-/* if (!event) {
-    return res.status(404).json({ error: "Event not found!" });
-  }
-
-  res.status(200).json(event);
-}; */
-
 const deleteEvent = async (req, res) => {
   const { id } = req.params;
+  const { username } = req.user;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Event not found!" });
   }
 
-  const event = await Event.findByIdAndDelete(id);
-
-  if (!event) {
-    return res.status(404).json({ error: "Event not found!" });
-  }
-
-  res.status(200).json(event);
+  try {
+    const eventDelete = await getAndCheckOwnership(id, username);
+    if (!eventDelete) {
+      return res.status(404).json({ err: "event not found!" });
+    }
+  await Event.findByIdAndDelete(id);
+  return res.status(200).json({ message: "event deleted success" });
+} catch (err) {
+  res.status(400).json({ err: true, message: err.message });
+}
 };
 
 module.exports = {
