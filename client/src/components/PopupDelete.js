@@ -7,7 +7,6 @@ export default function PopupModel({showModal, setShowModal,setEvents,event }) {
 //   const [users,setUsers] = useState([])
 
   const fetchEvents = async (event) => {
-    console.log(event)
     try {
       const response = await fetch(`/api/events/${event._id}`, {
         method: "DELETE",

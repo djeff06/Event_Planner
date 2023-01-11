@@ -15,7 +15,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
-  console.log(user.username) 
 
   const array2=[];
   array.map((ar)=>{

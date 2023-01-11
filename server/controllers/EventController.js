@@ -36,7 +36,6 @@ const createEvent = async (req, res) => {
       postedBy: username,
       /* user_id: req.user._id, */
     });
-    console.log(event)
     res.status(201).json(event);
   } catch (error) {
     res.status(400).json({ error: true, message: error.message });
@@ -47,8 +46,7 @@ const createEvent = async (req, res) => {
 const getEvents = async (req, res) => {
   const {username, id} = req.user;
   try {
-    const events = await Event.find({$or:[{postedBy: username}, {participants: id}]});
-    console.log("events",events)
+    const events = await Event.find({$or:[{postedBy: username}, {participants: id}]}).populate("participants", "username _id");
     res.status(200).json(events);
   } catch (err) {
     res.status(400).json({ err: err.message });
@@ -73,38 +71,41 @@ const getEvent = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params;1
+  const { username } = req.user;
+
   const update = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Event not found!" });
   }
   try {
-    const event = await Event.findById({ _id: id });
-
-    if (!event) {
-      return res.status(404).json({ error: "Event not found!" });
+    const updateEvent = await getAndCheckOwnership(id, username);
+    if (!updateEvent) {
+      return res.status(404).json({ err: "event not found!" });
     }
+    await Event.findById({ _id: id });
+
 
     if (update.title) {
-      event.title = update.title;
+      updateEvent.title = update.title;
     }
     if (update.date) {
-      event.date = update.date;
+      updateEvent.date = update.date;
     }
 
     if (update.duration) {
-      event.duration = update.duration;
+      updateEvent.duration = update.duration;
     }
     if (update.description) {
-      event.description = update.description;
+      updateEvent.description = update.description;
     }
     if (update.participants) {
-      event.participants = update.participants;
+      updateEvent.participants = update.participants;
     }
 
-    await event.save();
-    return res.status(200).json(event);
+    await updateEvent.save();
+    return res.status(200).json(updateEvent);
   } catch (err) {
     res.status(400).json({ err: true, message: err.message });
   }

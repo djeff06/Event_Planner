@@ -109,7 +109,7 @@ export default function EventForm({ event, setEvents }) {
               <MoreVertIcon />
             </IconButton>
           }
-          title={`Organizer:  ${user.postedBy}`}
+          title={`Organizer:  ${event.postedBy}`}
           subheader={`created At: ${Moment(event.createdAt).format(
             "DD-MM-YYYY"
           )}`}

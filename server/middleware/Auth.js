@@ -15,7 +15,6 @@ const checkAuth = async (req, res, next) => {
   try {
     const user = await User.findById({ _id }).select("username _id");
     req.user = user;
-    console.log(user);
     next();
   } catch (error) {
     console.log(error);

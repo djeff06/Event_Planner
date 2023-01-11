@@ -17,7 +17,6 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
 
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
-  console.log(user.username);
 
   const array2 = [];
   array.map((ar) => {
@@ -43,7 +42,6 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
   };
 
   const fetchEvents = async (event) => {
-    console.log();
     try {
       const response = await fetch(`/api/events/${id}`, {
         method: "PATCH",

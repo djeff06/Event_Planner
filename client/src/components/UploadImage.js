@@ -15,10 +15,8 @@ export function UploadImage() {
 
 
     const image = e.target.files[0];
-    // console.log("upload image", image);
     const upImg = URL.createObjectURL(image);
     setAvatar(upImg);
-    // console.log(upImg);
 
     if (!image) {
       return null;
@@ -29,7 +27,6 @@ export function UploadImage() {
       method: "GET",
     });
     const data = await response.json();
-    console.log(data);
     const { put, get, key } = data;
     await axios.put(put, image);
 
