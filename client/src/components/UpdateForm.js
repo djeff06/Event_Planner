@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -9,6 +8,7 @@ import { Auth } from "../contexts/Auth";
 import Select from "react-select";
 
 export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
+  console.log("event",event)
   const id = event._id;
   const array = [];
   users.map((user) => {
@@ -52,12 +52,12 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
 
         body: JSON.stringify(event),
       });
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  
   // multi select
 
   const MultiSelect = ({
@@ -83,6 +83,8 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
         return isMulti ? [] : "";
       }
     };
+
+    // `${event.participants.map(user=>console.log("user.username",user.username))}`
 
     if (!isMulti) {
       return (
@@ -120,11 +122,11 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
     <div className="flex flex-col w-full">
       <Formik
         initialValues={{
-          title: "",
-          date: "",
-          duration: "",
-          description: "",
-          participants: [],
+          title:`${event.title}`,
+          date: `${event.date}`,
+          duration: `${event.duration}`,
+          description: `${event.description}`,
+          participants: `${event.participants.map(user=>user.id)}`,
         }}
         validationSchema={Yup.object({
           title: Yup.string().max(30, "Must be 15 characters or less"),
@@ -138,6 +140,7 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
           await fetchEvents(event);
           await fetchAllEvents();
           setShowModal(false);
+          console.log(event)
         }}
       >
         <Form>

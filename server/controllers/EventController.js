@@ -84,7 +84,7 @@ const updateEvent = async (req, res) => {
     if (!updateEvent) {
       return res.status(404).json({ err: "event not found!" });
     }
-    await Event.findById({ _id: id });
+    // await Event.findById({ _id: id });
 
 
     if (update.title) {
