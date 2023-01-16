@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -37,8 +37,8 @@ export default function EventForm({ event, setEvents }) {
   const participants = event.participants;
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [disabledSettings, setDisabledSettings] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -88,7 +88,12 @@ export default function EventForm({ event, setEvents }) {
       ),
     },
   ];
-
+  useEffect(() => {
+      if (user.username !== event.postedBy) {
+        setDisabledSettings(true)
+      } 
+  }, [])
+  
   return (
     <div>
       <Card sx={{ minWidth: 345, maxWidth: 345, bgcolor: "transparent" }}>
@@ -105,6 +110,8 @@ export default function EventForm({ event, setEvents }) {
               onClick={handleClick}
               aria-label="settings"
               title="Settings"
+              disabled={disabledSettings}
+              
             >
               <MoreVertIcon />
             </IconButton>
@@ -188,7 +195,9 @@ export default function EventForm({ event, setEvents }) {
                   </ListItemAvatar> */}
                 <ListItemText
                   primary={participants.map((participant) => (
-                    <span className="text-sm" key={participant.id}>{participant.username}</span>
+                    <span className="text-sm" key={participant._id}>
+                      {participant.username}
+                    </span>
                   ))}
                 />
               </ListItem>
