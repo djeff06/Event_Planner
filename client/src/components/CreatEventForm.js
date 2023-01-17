@@ -16,14 +16,14 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
 
-  const array2=[];
-  array.map((ar)=>{
-    if(user.username !== ar.label){
+  const array2 = [];
+  array.map((ar) => {
+    if (user.username !== ar.label) {
       return array2.push({ value: `${ar.value}`, label: `${ar.label}` });
     } else {
-      return array2
+      return array2;
     }
-  })
+  });
 
   const fetchEvents = async (event) => {
     try {
@@ -36,7 +36,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
         body: JSON.stringify(event),
       });
-      console.log(response)
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
       const events = await response.json();
       setEvents(events);
     } catch (error) {
-      console.log("get error", error)
+      console.log("get error", error);
     }
   };
   // multi select
@@ -99,7 +99,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
     } else {
       return (
         <Select
-          className="react-select-container"
+          className="text-black react-select-container"
           classNamePrefix="react-select"
           name={field.name}
           value={getValue()}
@@ -132,9 +132,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
           description: Yup.string()
             .min(20, "Must be 20 characters or more")
             .required("Required"),
-          participants: Yup.array()
-            .of(Yup.string())
-            .nullable(),
+          participants: Yup.array().of(Yup.string()).nullable(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           const event = { ...values };
@@ -145,60 +143,60 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
       >
         <Form>
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Title"
             name="title"
             type="text"
             placeholder="title of event"
           />
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
-            label="Date"
+            className="text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            label="start date"
             name="date"
             type="date"
-            placeholder="date of event"
+            placeholder="start date"
           />
 
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Duration"
             name="duration"
             type="number"
             placeholder="number of days"
           />
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Description"
             name="description"
             type="text"
             placeholder="description of the event"
           />
-      
 
-          <Field
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
-            name="participants"
-            id="multiSelectCustom"
-            placeholder="Participants"
-            isMulti={true}
-            component={MultiSelect}
-            options={array2}
-          />
+          <div className="mt-10">
+            <Field
+              className="text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 "
+              name="participants"
+              id="multiSelectCustom"
+              placeholder="Participants"
+              isMulti={true}
+              component={MultiSelect}
+              options={array2}
+            />
+          </div>
 
-         
           <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
             <button
-              className="text-emerald-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => setShowModal(false)}
             >
               no
             </button>
 
             <button
-              className="bg-red-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-green-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="submit"
             >
-              Submit
+              Create
             </button>
           </div>
         </Form>

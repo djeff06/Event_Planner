@@ -135,7 +135,7 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
           description: Yup.string().min(20, "Must be 20 characters or more"),
           participants: Yup.array().of(Yup.string()).nullable(),
         })}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values) => {
           const event = { ...values };
           await fetchEvents(event);
           await fetchAllEvents();
@@ -167,7 +167,7 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
             placeholder="number of days"
           />
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 mb-10"
             label="Description"
             name="description"
             type="text"

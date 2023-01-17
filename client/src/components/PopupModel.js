@@ -34,18 +34,17 @@ export default function PopupModel({showModal, setShowModal,setEvents }) {
                     Create a new Event
                   </h3>
                 </div>
-                {/*body*/}
+              
 
                 <div className="relative px-3 flex w-full ">
                   <CreatEventForm users={users} setShowModal={setShowModal}setEvents={setEvents}/>
                 </div>
 
-                {/*footer*/}
+              
                
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>

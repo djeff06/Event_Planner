@@ -1,6 +1,5 @@
 import React from "react";
 import { useField } from "formik";
-import "../App.css"
 
 
 const useFormikForm = () =>{
@@ -13,7 +12,7 @@ const useFormikForm = () =>{
         <label className="text-gray-800 mt-4 textLeft" htmlFor={props.id || props.name}>
           {label}
         </label>
-        <input className="text-input" {...field} {...props} />
+        <input className="text-input " {...field} {...props} />
         {meta.touched && meta.error ? (
           <div className="text-red-500  ">{meta.error}</div>
         ) : null}

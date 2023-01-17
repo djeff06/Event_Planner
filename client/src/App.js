@@ -13,6 +13,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
 import Profile from "./pages/Profile";
+import Calendar from "./pages/Calendar";
 
 function App() {
   const { user } = useContext(Auth);
@@ -93,6 +94,25 @@ function App() {
                             className="h-100 w-100"
                           />
                           <Profile />
+                        </div>
+                      </MyProSidebarProvider>
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/calender"
+                  element={
+                    user ? (
+                      <MyProSidebarProvider>
+                        <div className="w-full">
+                          <Topbar
+                            theme1={theme1}
+                            setTheme1={setTheme1}
+                            className="h-100 w-100"
+                          />
+                          <Calendar />
                         </div>
                       </MyProSidebarProvider>
                     ) : (
