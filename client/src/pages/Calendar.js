@@ -51,7 +51,7 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header title="Calendar" subtitle="" />
       <Grid container spacing={2}>
         <Grid xs={12} md={4}>
           <Box

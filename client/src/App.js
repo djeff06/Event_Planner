@@ -102,7 +102,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/calender"
+                  path="/calendar"
                   element={
                     user ? (
                       <MyProSidebarProvider>
