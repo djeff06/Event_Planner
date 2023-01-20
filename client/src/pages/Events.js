@@ -1,90 +1,23 @@
-import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
-import { tokens } from "../theme";
-import CreateIcon from "@mui/icons-material/Create";
-import Header from "../components/Header";
-import EventCard from "../components/EventCard";
-import { useContext, useEffect, useState } from "react";
-import PopupModel from "../components/PopupModel";
-import { Auth } from "../contexts/Auth";
+import React, { useState } from "react";
+import { MyProSidebarProvider } from "../components/sidebar/sidebarContext";
+import Topbar from "../components/topbar/Topbar";
+import EventsPage from "../components/EventsPage";
 
+export default function Events() {
+  const [theme1, setTheme1] = useState("dark");
 
-const Events = () => {
-  const { user } = useContext(Auth);
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    const fetchEvents = async () => {
-      const response = await fetch("/api/events", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const events = await response.json();
-      setEvents(events);
-    };
-
-    fetchEvents();
-  }, [user]);
-
-  const theme = useTheme();
-  const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
-  const colors = tokens(theme.palette.mode);
-  const [showModal, setShowModal] = useState(false);
   return (
-    <Box m="20px">
-      {/* HEADER */}
-
-      <Box
-        display={smScreen ? "flex" : "block"}
-        flexDirection={smScreen ? "row" : "column"}
-        justifyContent={smScreen ? "space-between" : "start"}
-        alignItems={smScreen ? "center" : "start"}
-        m="10px 0"
-      >
-        <Header title="Events" />
-
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-            onClick={() => setShowModal(true)}
-          >
-            <CreateIcon sx={{ mr: "10px" }} />
-            Create new Event
-          </Button>
-        </Box>
-      </Box>
-
-      {/* GRID & CHARTS */}
-      <Grid
-        xs={12}
-        sm={12}
-        md={8}
-        lg={8}
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      >
-        <Grid xs={12} sm={12} md={12} lg={12}>
-          <EventCard events={events} setEvents={setEvents} />
-        </Grid>
-      </Grid>
-      <PopupModel
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setEvents={setEvents}
-      />
-      
-    </Box>
+    <div>
+      <MyProSidebarProvider>
+        <div className="w-full">
+          <Topbar
+            theme1={theme1}
+            setTheme1={setTheme1}
+            className="h-100 w-100"
+          />
+          <EventsPage />
+        </div>
+      </MyProSidebarProvider>
+    </div>
   );
-};
-
-export default Events;
+}

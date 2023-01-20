@@ -5,15 +5,13 @@ import Home from "./pages/Home";
 import Login from "./pages/login-signup/Login";
 import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
-import React, { Profiler, useContext, useState } from "react";
-import { MyProSidebarProvider } from "./components/sidebar/sidebarContext";
-import Topbar from "./components/topbar/Topbar";
+import React, {  useContext, useState } from "react";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
-import Profile from "./pages/Profile";
+// import Profile from "./pages/Profile";
 import Calendar from "./pages/Calendar";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const { user } = useContext(Auth);
@@ -24,15 +22,15 @@ function App() {
     <BrowserRouter>
       <>
         <div style={{ height: "100%", width: "100%" }}>
-          {!user && <Navbar theme1={theme1} setTheme1={setTheme1} />}
           <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-              <CssBaseline /> 
-              <Routes>
-                <Route>
+              <CssBaseline />
+              <main>
+                {!user && <Navbar theme1={theme1} setTheme1={setTheme1} />}
+                <Routes>
                   <Route
                     path="/"
-                    element={!user ? <Home /> : <Navigate to="/" />}
+                    element={!user ? <Home /> : <Navigate to="/dashboard" />}
                   />{" "}
                   <Route
                     path="/login"
@@ -40,87 +38,28 @@ function App() {
                   />
                   <Route
                     path="/signup"
-                    element={!user ? <Signup /> : <Navigate to="/dashboard" />}
+                    element={!user ? <Signup /> : <Navigate to="/" />}
                   />
-                </Route>
-
-                <Route
-                  path="/dashboard"
-                  element={
-                    user ? (
-                      <MyProSidebarProvider>
-                        <div className="w-full">
-                          <Topbar
-                            theme1={theme1}
-                            setTheme1={setTheme1}
-                            className="h-100 w-100"
-                          />
-                          <Dashboard />
-                        </div>
-                      </MyProSidebarProvider>
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  path="/events"
-                  element={
-                    user ? (
-                      <MyProSidebarProvider>
-                        <div className="w-full">
-                          <Topbar
-                            theme1={theme1}
-                            setTheme1={setTheme1}
-                            className="h-100 w-100"
-                          />
-                          <Events />
-                        </div>
-                      </MyProSidebarProvider>
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    user ? (
-                      <MyProSidebarProvider>
-                        <div className="w-full">
-                          <Topbar
-                            theme1={theme1}
-                            setTheme1={setTheme1}
-                            className="h-100 w-100"
-                          />
-                          <Profile />
-                        </div>
-                      </MyProSidebarProvider>
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-                <Route
-                  path="/calendar"
-                  element={
-                    user ? (
-                      <MyProSidebarProvider>
-                        <div className="w-full">
-                          <Topbar
-                            theme1={theme1}
-                            setTheme1={setTheme1}
-                            className="h-100 w-100"
-                          />
-                          <Calendar />
-                        </div>
-                      </MyProSidebarProvider>
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
-              </Routes>
+                  <Route
+                    path="/dashboard"
+                    element={
+                      user ? <Dashboard /> : <Navigate to="/login" />
+                    }
+                  />
+                  <Route
+                    path="/events"
+                    element={
+                      user ? <Events /> : <Navigate to="/login" />
+                    }
+                  />
+                  <Route
+                    path="/calendar"
+                    element={
+                      user ? <Calendar /> : <Navigate to="/login" />
+                    }
+                  />
+                </Routes>
+              </main>
             </ThemeProvider>
           </ColorModeContext.Provider>
         </div>
