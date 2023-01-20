@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const { getUploadPresignedUrlString } = require("../services/upload");
 
 const Schema = mongoose.Schema;
 
@@ -25,8 +26,21 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
+    profilePicture: {
+      type: String,
+      required: false,
+
+    },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: {
+    transform: function (doc, ret) {
+      if (ret.profilePicture) {
+        ret.image_url = getUploadPresignedUrlString(
+          ret.profilePicture
+        );
+      }
+    },
+  }, }
 );
 
 //signup form
@@ -34,7 +48,8 @@ UserSchema.statics.signup = async function (
   username,
   email,
   password,
-  confirmPassword
+  confirmPassword,
+  key
 ) {
   //Validating username, email and password
 
@@ -70,7 +85,7 @@ UserSchema.statics.signup = async function (
   //hashed password
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ username, email, password: hashedPassword });
+  const user = await this.create({ username, email, password: hashedPassword, profilePicture:key });
 
   return user;
 };

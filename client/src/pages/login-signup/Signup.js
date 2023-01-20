@@ -10,7 +10,7 @@ export default function Signup() {
   const { error, isLoading, signup } = useSignup();
 
   const handleSignup = async () => {
-    await signup(username, email, password, confirmPassword );
+    await signup(username, email, password, confirmPassword);
   };
   return (
     <div>

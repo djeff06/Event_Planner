@@ -27,7 +27,7 @@ function App() {
           {!user && <Navbar theme1={theme1} setTheme1={setTheme1} />}
           <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-              <CssBaseline />
+              <CssBaseline /> 
               <Routes>
                 <Route>
                   <Route
