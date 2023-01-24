@@ -1,6 +1,6 @@
 // docs https://github.com/azouaoui-med/react-pro-sidebar
 import { useContext, useEffect, useState } from "react";
-import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
+import { Menu,  MenuItem, Sidebar } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
 import { useSidebarContext } from "./sidebarContext";
 import { Link } from "react-router-dom";
@@ -119,6 +119,7 @@ const MyProSidebar = () => {
             top: 0,
             bottom: 0,
             zIndex: 10000,
+            margin: 0,
             "& .sidebar": {
               border: "none",
             },
@@ -148,6 +149,7 @@ const MyProSidebar = () => {
             rtl={sidebarRTL}
             backgroundColor={colors.primary[400]}
             image={sidebarImage}
+            width="177px"
           >
             <Menu iconshape="square">
               <MenuItem
@@ -245,17 +247,17 @@ const MyProSidebar = () => {
                   </Box>
                 </Box>
               )}
-              <Box paddingLeft={collapsed ? undefined : "10%"}>
+              <Box paddingLeft={collapsed ? undefined : "0%"}>
                 <Item
                   title="Dashboard"
-                  to="/dashboard"
+                  to=".../dashboard"
                   icon={<HomeOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
                 <Item
                   title="Events"
-                  to="/events"
+                  to=".../events"
                   icon={<HomeOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
@@ -263,7 +265,7 @@ const MyProSidebar = () => {
 
                 <Item
                   title="Calendar"
-                  to="/calendar"
+                  to=".../calendar"
                   icon={<CalendarTodayOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}

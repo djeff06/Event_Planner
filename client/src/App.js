@@ -5,13 +5,12 @@ import Home from "./pages/Home";
 import Login from "./pages/login-signup/Login";
 import Signup from "./pages/login-signup/Signup";
 import { Auth } from "./contexts/Auth";
-import React, {  useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Events from "./pages/Events";
 // import Profile from "./pages/Profile";
-import Calendar from "./pages/Calendar";
-import Dashboard from "./pages/Dashboard";
+
+import UserPages from "./pages/UserPages";
 
 function App() {
   const { user } = useContext(Auth);
@@ -30,33 +29,19 @@ function App() {
                 <Routes>
                   <Route
                     path="/"
-                    element={!user ? <Home /> : <Navigate to="/dashboard" />}
+                    element={!user ? <Home /> : <Navigate to="/user" />}
                   />{" "}
                   <Route
                     path="/login"
-                    element={!user ? <Login /> : <Navigate to="/dashboard" />}
+                    element={!user ? <Login /> : <Navigate to="/user" />}
                   />
                   <Route
                     path="/signup"
                     element={!user ? <Signup /> : <Navigate to="/" />}
                   />
                   <Route
-                    path="/dashboard"
-                    element={
-                      user ? <Dashboard /> : <Navigate to="/login" />
-                    }
-                  />
-                  <Route
-                    path="/events"
-                    element={
-                      user ? <Events /> : <Navigate to="/login" />
-                    }
-                  />
-                  <Route
-                    path="/calendar"
-                    element={
-                      user ? <Calendar /> : <Navigate to="/login" />
-                    }
+                    path="/user/*"
+                    element={user ? <UserPages /> : <Navigate to="/login" />}
                   />
                 </Routes>
               </main>

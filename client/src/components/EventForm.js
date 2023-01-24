@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
@@ -89,11 +89,11 @@ export default function EventForm({ event, setEvents }) {
     },
   ];
   useEffect(() => {
-      if (user.username !== event.postedBy) {
-        setDisabledSettings(true)
-      } 
-  }, [])
-  
+    if (user.username !== event.postedBy) {
+      setDisabledSettings(true);
+    }
+  }, []);
+
   return (
     <div>
       <Card sx={{ minWidth: 345, maxWidth: 345, bgcolor: "transparent" }}>
@@ -111,7 +111,6 @@ export default function EventForm({ event, setEvents }) {
               aria-label="settings"
               title="Settings"
               disabled={disabledSettings}
-              
             >
               <MoreVertIcon />
             </IconButton>
@@ -181,27 +180,27 @@ export default function EventForm({ event, setEvents }) {
 
             <List>
               {/* {generate( */}
-              <ListItem
-              /* secondaryAction={
+              {participants.map((participant) => (
+                <ListItem
+                  key={participant._id}
+                  secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                       <DeleteIcon />
                     </IconButton>
-                  } */
-              >
-                {/* <ListItemAvatar>
+                  }
+                >
+                  {/* <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar> */}
-                <ListItemText
-                  primary={participants.map((participant) => (
-                    <span className="text-sm" key={participant._id}>
-                      {participant.username}
-                    </span>
-                  ))}
-                />
-              </ListItem>
-              {/* )} */}
+                  <ListItemText
+                    primary={
+                      <span className="text-sm">{participant.username}</span>
+                    }
+                  />
+                </ListItem>
+              ))}
             </List>
           </CardContent>
         </Collapse>
