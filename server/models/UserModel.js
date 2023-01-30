@@ -31,6 +31,11 @@ const UserSchema = new Schema(
       required: false,
 
     },
+    fcmToken: {
+      type: String,
+      required: false,
+
+    },
   },
   { timestamps: true, toJSON: {
     transform: function (doc, ret) {
@@ -49,7 +54,8 @@ UserSchema.statics.signup = async function (
   email,
   password,
   confirmPassword,
-  key
+  key,
+  fcmToken
 ) {
   //Validating username, email and password
 
@@ -85,7 +91,10 @@ UserSchema.statics.signup = async function (
   //hashed password
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ username, email, password: hashedPassword, profilePicture:key });
+
+
+
+  const user = await this.create({ username, email, password: hashedPassword, profilePicture:key, fcmToken });
 
   return user;
 };
@@ -112,6 +121,7 @@ UserSchema.statics.login = async function (email, password) {
   if (!correctPassword) {
     throw Error("Incorrect Password");
   }
+
 
   return user;
 };

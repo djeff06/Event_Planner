@@ -1,11 +1,12 @@
 const express = require("express");
-const { getUsers, login, signup, updateKey, getUser } = require("../controllers/UserController");
+const { getUsers, login, signup, updateKey, getUser, updateFcmToken } = require("../controllers/UserController");
 const AuthMiddleware = require("../middleware/Auth")
 
 const router = express.Router();
 
 // Login route
 router.post("/login", login);
+
 
 // Signup route
 router.post("/signup", signup);

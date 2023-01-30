@@ -230,7 +230,7 @@ const MyProSidebar = () => {
                           alt=""
                         ></img>
                       ) : (
-                        <span className="uppercase">{user.username[0]}</span>
+                        <span className="uppercase">{user.username}</span>
                       )}
                     </div>
                   </Box>

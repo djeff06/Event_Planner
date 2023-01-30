@@ -1,19 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Auth } from "../contexts/Auth";
+import { useFcmToken } from "./useFcmToken";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useContext(Auth);
+  const { requestPermission } = useFcmToken();
 
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
+    const fcmToken = await requestPermission();
+
     const response = await fetch("/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, fcmToken }),
     });
     const json = await response.json();
 

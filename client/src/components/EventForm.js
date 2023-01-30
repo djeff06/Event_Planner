@@ -43,13 +43,7 @@ export default function EventForm({ event, setEvents }) {
     setExpanded(!expanded);
   };
 
-  /*   function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      })
-    );
-  } */
+
 
   // profile menu
 
