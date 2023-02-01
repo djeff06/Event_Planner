@@ -62,7 +62,7 @@ const MyProSidebar = () => {
       method: "GET",
     });
     const data = await response.json();
-    const { put, get, key } = data;
+    const { put, key } = data;
     await axios.put(put, image);
 
     try {

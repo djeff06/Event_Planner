@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import useFormikForm from "../hooks/useFormikForm";
@@ -113,11 +113,11 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
 
   // Send an invitation
-  async function handleSendInvitations(par) {
+  async function handleSendInvitations(part) {
     // make a POST request to the backend with the selected users
     const response = await fetch("/api/send-invitations", {
       method: "POST",
-      body: JSON.stringify({ users: par }),
+      body: JSON.stringify({ invitations: part }),
       headers: { "Content-Type": "application/json" },
     });
     console.log("response from the fetch", response);
@@ -147,12 +147,12 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
         })}
         onSubmit={async (values, { setSubmitting }) => {
           const event = { ...values };
-          const par = values.participants;
-          console.log("par", par);
+          const part = values.participants;
+          console.log("par", part);
           fetchEvents(event);
           fetchAllEvents();
           setShowModal(false);
-          handleSendInvitations(par);
+          handleSendInvitations(part);
         }}
       >
         <Form>

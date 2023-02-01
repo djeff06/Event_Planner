@@ -86,7 +86,7 @@ export default function EventForm({ event, setEvents }) {
     if (user.username !== event.postedBy) {
       setDisabledSettings(true);
     }
-  }, []);
+  }, [event.postedBy, user.username]);
 
   return (
     <div>

@@ -44,6 +44,7 @@ export const useFcmToken = () => {
           return token;
         } else {
           console.log("no permission");
+          resolve(null);
         }
         return token;
       });

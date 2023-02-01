@@ -6,7 +6,7 @@ const postInvitation = (req, res) => {
   console.log("invitations",invitations)
   // send an invitation to each selected user
   invitations.forEach(async(invitation) => {
-    const user = await User.findById({ _id: invitation });
+    const user = await User.findById({ _id : invitation });
     console.log("user",user)
     sendInvitation(user);
   });
@@ -15,6 +15,12 @@ const postInvitation = (req, res) => {
 };
 
 const admin = require("firebase-admin");
+
+const serviceAccount = require("../event-planner-372620-firebase-adminsdk-rta70-491fb04613.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 //  Firebase config
 
