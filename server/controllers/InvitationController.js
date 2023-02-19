@@ -17,24 +17,12 @@ const postInvitation = (req, res) => {
 const admin = require("firebase-admin");
 
 const serviceAccount = require("../event-planner-372620-firebase-adminsdk-rta70-491fb04613.json");
+console.log("serviceAccount",serviceAccount)
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-//  Firebase config
-
-/* const firebaseConfig = {
-  apiKey: "AIzaSyDqKkaeXh4OcK7t5KHRn_9aWcnSpZ0yr-U",
-  authDomain: "event-planner-372620.firebaseapp.com",
-  projectId: "event-planner-372620",
-  storageBucket: "event-planner-372620.appspot.com",
-  messagingSenderId: "1093637141452",
-  appId: "1:1093637141452:web:208397bc3f40d47c07a369",
-};
-admin.initializeApp({
-  firebaseConfig,
-}); */
 
 function sendInvitation(user) {
   // get the user's push notification token
@@ -49,6 +37,7 @@ function sendInvitation(user) {
     },
     token: pushToken,
   };
+  console.log("message", message)
 
   // send the message
   admin

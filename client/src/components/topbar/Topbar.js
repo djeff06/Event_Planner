@@ -9,6 +9,10 @@ import {
   Menu,
   MenuItem,
   Typography,
+  Popover,
+  ListItemText,
+  ListItem,
+  List,
 } from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -21,6 +25,7 @@ import "./dropDownMenu.css";
 
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { Link } from "react-router-dom";
+import Notification from "../Notification";
 
 const Topbar = ({ theme1, setTheme1 }) => {
   const theme = useTheme();
@@ -54,13 +59,8 @@ const Topbar = ({ theme1, setTheme1 }) => {
     logout();
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // notification & profile
+
   const dummyMenuItems = [
     {
       id: 1,
@@ -85,6 +85,32 @@ const Topbar = ({ theme1, setTheme1 }) => {
       ),
     },
   ];
+
+  const notifications = [<Notification />];
+  const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
+  const [personAnchorEl, setPersonAnchorEl] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleNotificationsClick = (event) => {
+    setNotificationsAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationsClose = () => {
+    setNotificationsAnchorEl(null);
+  };
+
+  const handlePersonClick = (event) => {
+    setPersonAnchorEl(event.currentTarget);
+  };
+
+  const handlePersonClose = () => {
+    setPersonAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    handleNotificationsClose();
+  };
 
   return (
     <div className="w-full">
@@ -121,35 +147,83 @@ const Topbar = ({ theme1, setTheme1 }) => {
             </IconButton>
           </Box>
         </Box>
+
+        {/* notification */}
         <Box display="flex">
-          <IconButton>
+          <IconButton
+            aria-controls="notification-menu"
+            aria-haspopup="true"
+            onClick={handleNotificationsClick}
+            aria-label="Open to show more"
+            title="Open to show more"
+          >
             <NotificationsOutlinedIcon />
           </IconButton>
+          <Menu
+            id="notification-menu"
+            anchorEl={notificationsAnchorEl}
+            open={Boolean(notificationsAnchorEl)}
+            onClose={handleNotificationsClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <List component="nav">
+              <ListItem button onClick={handleMenuItemClick}>
+                <ListItemText
+                  primary="Notifications"
+                  secondary={notifications[selectedIndex]}
+                />
+              </ListItem>
+            </List>
+            {notifications.map((option, index) => (
+              <MenuItem
+                key={option}
+                disabled={index === 0}
+                selected={index === selectedIndex}
+                onClick={(event) => handleMenuItemClick(event, index)}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+
+          {/* profile  */}
           <IconButton>
             <SettingsOutlinedIcon />
           </IconButton>
           <IconButton
-            aria-controls="simple-menu"
+            aria-controls="person-menu"
             aria-haspopup="true"
-            onClick={handleClick}
+            onClick={handlePersonClick}
             aria-label="Open to show more"
             title="Open to show more"
           >
             <PersonOutlinedIcon />
           </IconButton>
           <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
+            id="user-menu"
+            anchorEl={personAnchorEl}
             keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
+            open={Boolean(personAnchorEl)}
+            onClose={handlePersonClose}
           >
             {dummyMenuItems.map((item) => (
-              <MenuItem onClick={handleClose} key={item.id} value={item.title}>
+              <MenuItem
+                onClick={handlePersonClose}
+                key={item.id}
+                value={item.title}
+              >
                 {item.title}
               </MenuItem>
             ))}
           </Menu>
+
           <button
             onClick={toggleTheme}
             checked={isDarkMode}
@@ -176,4 +250,4 @@ const Topbar = ({ theme1, setTheme1 }) => {
   );
 };
 
-export default Topbar;
+export default Topbar;    
