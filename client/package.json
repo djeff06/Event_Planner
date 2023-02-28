@@ -29,6 +29,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",
     "react-simple-widgets": "^6.7.0",
+    "react-toastify": "^9.1.1",
     "react-toggle-dark-mode": "^1.1.1",
     "socket.io-client": "^4.5.4",
     "uuid": "^9.0.0",

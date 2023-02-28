@@ -31,11 +31,11 @@ const UserSchema = new Schema(
       required: false,
 
     },
-    fcmToken: {
-      type: String,
-      required: false,
+    // fcmToken: {
+    //   type: String,
+    //   required: false,
 
-    },
+    // },
   },
   { timestamps: true, toJSON: {
     transform: function (doc, ret) {
@@ -55,7 +55,7 @@ UserSchema.statics.signup = async function (
   password,
   confirmPassword,
   key,
-  fcmToken
+  // fcmToken
 ) {
   //Validating username, email and password
 
@@ -94,7 +94,7 @@ UserSchema.statics.signup = async function (
 
 
 
-  const user = await this.create({ username, email, password: hashedPassword, profilePicture:key, fcmToken });
+  const user = await this.create({ username, email, password: hashedPassword, profilePicture:key });
 
   return user;
 };

@@ -7,9 +7,9 @@ const generateToken = (_id) => {
 
 // Login the user
 const login = async (req, res) => {
-  const { email, password, fcmToken } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.login(email, password, fcmToken);
+    const user = await User.login(email, password);
 
     //Create the JWT
     const token = generateToken(user._id);
@@ -24,18 +24,18 @@ const login = async (req, res) => {
       }
       // await Event.findById({ _id: id });
 
-      if (fcmToken) {
-        getUser.fcmToken = fcmToken;
-      }
-      console.log(getUser);
+      // if (fcmToken) {
+      //   getUser.fcmToken = fcmToken;
+      // }
+      // console.log(getUser);
 
       await getUser.save();
       return res.status(200).json({
         username: user.username,
         email: user.email,
         token,
-        fcmToken: user.fcmToken,
-        message: "fcnToken updated",
+        // fcmToken: user.fcmToken,
+        // message: "fcnToken updated",
       });
     } catch (err) {
       res.status(400).json({ err: true, message: err.message });
@@ -47,7 +47,7 @@ const login = async (req, res) => {
 
 // Signup the user
 const signup = async (req, res) => {
-  const { username, email, password, confirmPassword, key, fcmToken } =
+  const { username, email, password, confirmPassword, key } =
     req.body;
   try {
     const user = await User.signup(
@@ -56,7 +56,7 @@ const signup = async (req, res) => {
       password,
       confirmPassword,
       key,
-      fcmToken
+      // fcmToken
     );
 
     //Create the JWT
@@ -68,7 +68,7 @@ const signup = async (req, res) => {
       username: user.username,
       email: user.email,
       token,
-      fcmToken: user.fcmToken,
+      // fcmToken: user.fcmToken,
     });
   } catch (error) {
     res.status(400).json(error.message);

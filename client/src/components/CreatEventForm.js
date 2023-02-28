@@ -15,6 +15,7 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
 
+
   const array2 = [];
   array.map((ar) => {
     if (user.username !== ar.label) {
@@ -114,11 +115,13 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
   // Send an invitation
   async function handleSendInvitations(part) {
-    // make a POST request to the backend with the selected users
     const response = await fetch("/api/send-invitations", {
       method: "POST",
       body: JSON.stringify({ invitations: part }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
     });
     console.log("response from the fetch", response);
   }

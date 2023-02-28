@@ -46,7 +46,6 @@ mongoose
       }
     }
   }));
-
 app.listen(process.env.PORT, () => {
   console.log(`listening for request on port ${process.env.PORT}`);
   createS3Bucket();

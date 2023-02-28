@@ -9,10 +9,10 @@ import {
   Menu,
   MenuItem,
   Typography,
-  Popover,
   ListItemText,
   ListItem,
   List,
+  Badge,
 } from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -25,13 +25,14 @@ import "./dropDownMenu.css";
 
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { Link } from "react-router-dom";
-import Notification from "../Notification";
+import { Auth } from "../../contexts/Auth";
 
 const Topbar = ({ theme1, setTheme1 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const { toggleSidebar, broken, rtl } = useProSidebar();
+  const { user } = useContext(Auth);
 
   useEffect(() => {
     document.body.className = theme1;
@@ -86,7 +87,28 @@ const Topbar = ({ theme1, setTheme1 }) => {
     },
   ];
 
-  const notifications = [<Notification />];
+  // notification
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/send-invitations/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((notifications) => {
+        setNotifications(notifications);
+        console.log("notifications", notifications);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [setNotifications]);
+
+  // const notifications = [<Notification NmbrOfNotification={NmbrOfNotification} setNmbrOfNotification={setNmbrOfNotification}/>];
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [personAnchorEl, setPersonAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -109,6 +131,7 @@ const Topbar = ({ theme1, setTheme1 }) => {
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
+    console.log(index)
     handleNotificationsClose();
   };
 
@@ -157,7 +180,9 @@ const Topbar = ({ theme1, setTheme1 }) => {
             aria-label="Open to show more"
             title="Open to show more"
           >
-            <NotificationsOutlinedIcon />
+            <Badge padding="0" badgeContent={notifications.length} color="secondary">
+              <NotificationsOutlinedIcon />
+            </Badge>
           </IconButton>
           <Menu
             id="notification-menu"
@@ -174,21 +199,26 @@ const Topbar = ({ theme1, setTheme1 }) => {
             }}
           >
             <List component="nav">
-              <ListItem button onClick={handleMenuItemClick}>
+              <ListItem onClick={handleMenuItemClick}>
                 <ListItemText
                   primary="Notifications"
-                  secondary={notifications[selectedIndex]}
+                  // secondary={notifications[selectedIndex]}
                 />
               </ListItem>
             </List>
-            {notifications.map((option, index) => (
+         
+            {notifications.map((notif, option, index) => (
               <MenuItem
                 key={option}
                 disabled={index === 0}
                 selected={index === selectedIndex}
                 onClick={(event) => handleMenuItemClick(event, index)}
               >
-                {option}
+                <div className="menu-item-heading">
+                  
+                  <h2>{option}{notif.message.notification.title}</h2>
+                  <div>{notif.message.notification.body}</div>
+                </div>
               </MenuItem>
             ))}
           </Menu>
@@ -250,4 +280,4 @@ const Topbar = ({ theme1, setTheme1 }) => {
   );
 };
 
-export default Topbar;    
+export default Topbar;
