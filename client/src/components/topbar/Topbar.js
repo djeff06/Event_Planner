@@ -89,8 +89,6 @@ const Topbar = ({ theme1, setTheme1 }) => {
 
   // notification
   const [notifications, setNotifications] = useState([]);
-  const [nmbrOfNotification, setNmbrOfNotification] = useState(0);
-  const [readNotification, setReadNotification] = useState([]);
 
   useEffect(() => {
     fetch("/api/send-invitations/", {
@@ -103,30 +101,11 @@ const Topbar = ({ theme1, setTheme1 }) => {
       .then((response) => response.json())
       .then((notifications) => {
         setNotifications(notifications);
-        setNmbrOfNotification(notifications.length);
-        notifications.map((n) => {
-          if (n.read === true) {
-            readNotification.push(n);
-          }
-        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [setNotifications]);
-
-  
-
-  const numberOfnotification = ()=>{
-
-    console.log("readNotification.length", readNotification.length);
-    const somme = nmbrOfNotification - readNotification.length;
-    return Number(somme); 
-  }
-
-
-   
-
+  }, []);
 
   // const notifications = [<Notification NmbrOfNotification={NmbrOfNotification} setNmbrOfNotification={setNmbrOfNotification}/>];
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
@@ -197,10 +176,7 @@ const Topbar = ({ theme1, setTheme1 }) => {
         </Box>
         <Box display="flex" p={2}>
           {broken && !rtl && (
-            <IconButton
-              sx={{ margin: "0 6 0 2" }}
-              onClick={() => toggleSidebar()}
-            >
+            <IconButton sx={{ margin: "0 6 0 2" }} onClick={toggleSidebar}>
               <MenuOutlinedIcon />
             </IconButton>
           )}
@@ -228,7 +204,7 @@ const Topbar = ({ theme1, setTheme1 }) => {
           >
             <Badge
               padding="0"
-              badgeContent={Math.max(numberOfnotification(), 0)}
+              badgeContent={notifications.filter((item) => !item.read).length}
               color="secondary"
             >
               <NotificationsOutlinedIcon />

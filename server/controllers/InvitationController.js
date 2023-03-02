@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const postInvitation = async (req, res) => {
   const { invitations } = req.body;
-  
+
   const token = req.headers.authorization.split(" ")[1];
   const { _id } = jwt.verify(token, process.env.JWT_SECRET);
   const sender = _id;
@@ -19,10 +19,7 @@ const postInvitation = async (req, res) => {
   res.send("Invitations sent!");
 };
 
-
 function sendInvitation(receiver, sender) {
-
-
   // create the message to send
   const message = {
     notification: {
@@ -45,20 +42,22 @@ function sendInvitation(receiver, sender) {
   });
 
   console.log("message", message);
-
 }
-
+// get all invitations
 const getInvitations = async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const { _id } = jwt.verify(token, process.env.JWT_SECRET);
   try {
-    const invitation = await Notifications.find({recipient: _id});
+    const invitation = await Notifications.find({ recipient: _id });
     res.status(200).json(invitation);
-    console.log("invitation",invitation)
+    console.log("invitation", invitation);
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
 };
+
+// update read state
+
 const updateInvitations = async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const { _id } = jwt.verify(token, process.env.JWT_SECRET);
@@ -67,16 +66,20 @@ const updateInvitations = async (req, res) => {
     const invitations = await Notifications.find({ recipient: _id });
 
     // Update the 'read' property for all unread notifications that have been selected
-    console.log("notification id",req.params.id)
-    const selectedInvitations = invitations.filter(invitation => !invitation.read && invitation._id.equals(req.params.id));
+    console.log("notification id", req.params.id);
+    const selectedInvitations = invitations.filter(
+      (invitation) => !invitation.read && invitation._id.equals(req.params.id)
+    );
     await Notifications.findByIdAndUpdate(
-      selectedInvitations.map(invitation => invitation._id),
+      selectedInvitations.map((invitation) => invitation._id),
       { read: true }
     );
-console.log("selectedInvitations",selectedInvitations)
+    console.log("selectedInvitations", selectedInvitations);
     // Filter out disabled notifications and send the remaining ones
-    const filteredInvitations = invitations.filter(invitation => !invitation.read);
-    console.log("filteredInvitations",filteredInvitations)
+    const filteredInvitations = invitations.filter(
+      (invitation) => !invitation.read
+    );
+    console.log("filteredInvitations", filteredInvitations);
     res.status(200).json(filteredInvitations);
   } catch (err) {
     res.status(400).json({ err: err.message });
