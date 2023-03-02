@@ -89,6 +89,8 @@ const Topbar = ({ theme1, setTheme1 }) => {
 
   // notification
   const [notifications, setNotifications] = useState([]);
+  const [nmbrOfNotification, setNmbrOfNotification] = useState(0);
+  const [readNotification, setReadNotification] = useState([]);
 
   useEffect(() => {
     fetch("/api/send-invitations/", {
@@ -101,12 +103,30 @@ const Topbar = ({ theme1, setTheme1 }) => {
       .then((response) => response.json())
       .then((notifications) => {
         setNotifications(notifications);
-        console.log("notifications", notifications);
+        setNmbrOfNotification(notifications.length);
+        notifications.map((n) => {
+          if (n.read === true) {
+            readNotification.push(n);
+          }
+        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, [setNotifications]);
+
+  
+
+  const numberOfnotification = ()=>{
+
+    console.log("readNotification.length", readNotification.length);
+    const somme = nmbrOfNotification - readNotification.length;
+    return Number(somme); 
+  }
+
+
+   
+
 
   // const notifications = [<Notification NmbrOfNotification={NmbrOfNotification} setNmbrOfNotification={setNmbrOfNotification}/>];
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
@@ -128,10 +148,36 @@ const Topbar = ({ theme1, setTheme1 }) => {
   const handlePersonClose = () => {
     setPersonAnchorEl(null);
   };
-
-  const handleMenuItemClick = (event, index) => {
+  const handleMenuItemClick = (id, index) => {
     setSelectedIndex(index);
-    console.log(index)
+    fetch(`/api/send-invitations/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ read: true }),
+    })
+      .then((res) => {
+        // Disable notification item in frontend
+        setNotifications((prevNotifications) => {
+          const updatedNotifications = prevNotifications.map((notification) => {
+            if (notification._id === id) {
+              return {
+                ...notification,
+                read: true,
+                disabled: true,
+              };
+            } else {
+              return notification;
+            }
+          });
+          return updatedNotifications;
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     handleNotificationsClose();
   };
 
@@ -180,7 +226,11 @@ const Topbar = ({ theme1, setTheme1 }) => {
             aria-label="Open to show more"
             title="Open to show more"
           >
-            <Badge padding="0" badgeContent={notifications.length} color="secondary">
+            <Badge
+              padding="0"
+              badgeContent={Math.max(numberOfnotification(), 0)}
+              color="secondary"
+            >
               <NotificationsOutlinedIcon />
             </Badge>
           </IconButton>
@@ -206,17 +256,19 @@ const Topbar = ({ theme1, setTheme1 }) => {
                 />
               </ListItem>
             </List>
-         
-            {notifications.map((notif, option, index) => (
+
+            {notifications.map((notif, index) => (
               <MenuItem
-                key={option}
-                disabled={index === 0}
+                key={notif._id}
+                disabled={notif.read.true}
                 selected={index === selectedIndex}
-                onClick={(event) => handleMenuItemClick(event, index)}
+                onClick={() => handleMenuItemClick(notif._id, index)}
               >
                 <div className="menu-item-heading">
-                  
-                  <h2>{option}{notif.message.notification.title}</h2>
+                  <h2>
+                    {/* {option} */}
+                    {notif.message.notification.title}
+                  </h2>
                   <div>{notif.message.notification.body}</div>
                 </div>
               </MenuItem>

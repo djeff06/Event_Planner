@@ -59,8 +59,32 @@ const getInvitations = async (req, res) => {
     res.status(400).json({ err: err.message });
   }
 };
+const updateInvitations = async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const { _id } = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    // Find all notifications for the recipient
+    const invitations = await Notifications.find({ recipient: _id });
+
+    // Update the 'read' property for all unread notifications that have been selected
+    console.log("notification id",req.params.id)
+    const selectedInvitations = invitations.filter(invitation => !invitation.read && invitation._id.equals(req.params.id));
+    await Notifications.findByIdAndUpdate(
+      selectedInvitations.map(invitation => invitation._id),
+      { read: true }
+    );
+console.log("selectedInvitations",selectedInvitations)
+    // Filter out disabled notifications and send the remaining ones
+    const filteredInvitations = invitations.filter(invitation => !invitation.read);
+    console.log("filteredInvitations",filteredInvitations)
+    res.status(200).json(filteredInvitations);
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
 
 module.exports = {
   postInvitation,
   getInvitations,
+  updateInvitations,
 };

@@ -78,7 +78,7 @@ const EventsPage = () => {
         </Grid>
       </Grid>
       <PopupModel
-        showModal={showModal}
+        showModal={showModal}O
         setShowModal={setShowModal}
         setEvents={setEvents}
       />
