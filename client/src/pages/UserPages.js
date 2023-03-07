@@ -9,9 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Auth } from "../contexts/Auth";
 
-
 export default function UserPages() {
-  const {user}=useContext(Auth)
+  const { user } = useContext(Auth);
   const [theme1, setTheme1] = useState("dark");
   const location = useLocation();
 
@@ -26,14 +25,18 @@ export default function UserPages() {
           },
         });
         const notifications = await response.json();
-        console.log("notification", notifications)
+        console.log("notification", notifications);
         // Process the notifications
-        toast(
-          <ToastifyNotification
-            title={notifications[0].message.notification.title}
-            body={notifications[0].message.notification.body}
-          />
-        );
+        notifications.map((notification) => {
+          if (notification.read === false) {
+            return toast(
+              <ToastifyNotification
+                title={notification.message.notification.title}
+                body={notification.message.notification.body}
+              />
+            );
+          }
+        });
       } catch (err) {
         console.error(err);
       }
@@ -41,7 +44,7 @@ export default function UserPages() {
     getNotifications();
   }, []);
 
-  const ToastifyNotification = ({ title, body }) =>  (
+  const ToastifyNotification = ({ title, body }) => (
     <div className="push-notification">
       <h2 className="push-notification-title">{title}</h2>
       <p className="push-notification-text">{body}</p>
@@ -52,8 +55,7 @@ export default function UserPages() {
     <div>
       <MyProSidebarProvider>
         <div className="w-full">
-        <div>
-
+          <div>
             <ToastContainer
               position="top-right"
               autoClose={5000}
@@ -72,7 +74,7 @@ export default function UserPages() {
             setTheme1={setTheme1}
             className="h-100 w-100"
           />
-          
+
           {location.pathname === "/user/.../dashboard" && <DashboardPage />}
           {location.pathname === "/user/.../events" && <EventsPage />}
           {location.pathname === "/user/.../calendar" && <CalendarPage />}

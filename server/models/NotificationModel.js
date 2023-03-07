@@ -22,7 +22,11 @@ const notificationSchema = new mongoose.Schema({
   read: {
     type: Boolean,
     default: false
-  }
+  },
+  expiresAt: {
+    type: Date,
+    index: { expires: '1d' }, // Set TTL index to expire documents after 1 day
+  },
 });
 
 const Notifications = mongoose.model('Notification', notificationSchema);

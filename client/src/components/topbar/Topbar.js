@@ -231,24 +231,22 @@ const Topbar = ({ theme1, setTheme1 }) => {
                   // secondary={notifications[selectedIndex]}
                 />
               </ListItem>
-            </List>
 
-            {notifications.map((notif, index) => (
-              <MenuItem
-                key={notif._id}
-                disabled={notif.read.true}
-                selected={index === selectedIndex}
-                onClick={() => handleMenuItemClick(notif._id, index)}
-              >
-                <div className="menu-item-heading">
-                  <h2>
-                    {/* {option} */}
-                    {notif.message.notification.title}
-                  </h2>
-                  <div>{notif.message.notification.body}</div>
-                </div>
-              </MenuItem>
-            ))}
+              {notifications.slice().reverse().map((notif, index) => (
+                <MenuItem
+                  key={notif._id}
+                  disabled={notif.read}
+                  selected={index === selectedIndex}
+                  divider={true}
+                  onClick={() => handleMenuItemClick(notif._id, index)}
+                >
+                  <div className="menu-item-heading">
+                    <h2>{notif.message.notification.title}</h2>
+                    <div>{notif.message.notification.body}</div>
+                  </div>
+                </MenuItem>
+              ))}
+            </List>
           </Menu>
 
           {/* profile  */}

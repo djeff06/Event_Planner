@@ -8,7 +8,7 @@ const postInvitation = async (req, res) => {
 
   const token = req.headers.authorization.split(" ")[1];
   const { _id } = jwt.verify(token, process.env.JWT_SECRET);
-  const sender = _id;
+  const sender = await User.findById({ _id: _id });
 
   // send an invitation to each selected user
   invitations.forEach(async (invitation) => {
@@ -21,16 +21,18 @@ const postInvitation = async (req, res) => {
 
 function sendInvitation(receiver, sender) {
   // create the message to send
+  console.log(sender.username)
   const message = {
     notification: {
       title: "Event Invitation",
-      body: "You are invited to an event!",
+      body: `You are invited to an event by ${sender.username}`,
     },
   };
   const newNotification = new Notifications({
     recipient: receiver,
     sender: sender,
     message: message,
+    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
   });
 
   newNotification.save((err, notification) => {

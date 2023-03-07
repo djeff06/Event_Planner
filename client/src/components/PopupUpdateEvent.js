@@ -31,7 +31,7 @@ export default function PopupUpdateEvent({showModal, setShowModal,setEvents,even
                 {/*header*/}
                 <div className="flex  p-2 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold text-black">
-                    Create a new Event
+                    Updating...
                   </h3>
                 </div>
                 {/*body*/}
