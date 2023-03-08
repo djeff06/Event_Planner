@@ -59,13 +59,13 @@ const DashboardPage = () => {
       align: "left",
       width: 150,
     },
-    { field: "duration", headerName: "Duration", type: "number", width: 100 },
+    { field: "duration", headerName: "Duration", type: "number",align: "center", width: 100 },
     {
       field: "participants",
       headerName: "Participants",
       valueGetter: (parsedEvents) =>  events.map((event) => {
         return event.participants.map((participant) => {
-          return participant.username;
+          return [participant.username];
         });
       }),
       width: 200,

@@ -68,7 +68,7 @@ const Topbar = ({ theme1, setTheme1 }) => {
       title: (
         <div className="d-grid">
           <Link to="/profile">
-            <button className="btn btn-secondary ">
+            <button className="btn  ">
               <big>Profile</big>
             </button>
           </Link>
@@ -79,7 +79,7 @@ const Topbar = ({ theme1, setTheme1 }) => {
       id: 2,
       title: (
         <div className="d-grid">
-          <button onClick={handleLogout} className="btn btn-secondary ">
+          <button onClick={handleLogout} className="btn  ">
             <big>Logout</big>
           </button>
         </div>
