@@ -15,6 +15,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PopupDelete from "./PopupDelete";
+import AddIcon from '@mui/icons-material/Add';
 
 import { Auth } from "../contexts/Auth";
 import Moment from "moment";
@@ -34,7 +35,6 @@ const ExpandMore = styled((props) => {
 
 export default function EventForm({ event, setEvents }) {
   const { user } = useContext(Auth);
-  const participants = event.participants;
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -43,7 +43,16 @@ export default function EventForm({ event, setEvents }) {
     setExpanded(!expanded);
   };
 
+  /*   const participant = ()=>{
+    if(event.participants.length === 0){
+      return 
+    } else {
+      return event.participants
+    }
+  } */
 
+  const participants = event.participants;
+  console.log("participants", participants.length)
 
   // profile menu
 
@@ -59,10 +68,7 @@ export default function EventForm({ event, setEvents }) {
       id: 1,
       title: (
         <div className="d-grid">
-          <button
-            onClick={() => setShowModal2(true)}
-            className="btn btn-secondary "
-          >
+          <button onClick={() => setShowModal2(true)} className="btn  ">
             <big>Edit</big>
           </button>
         </div>
@@ -72,10 +78,7 @@ export default function EventForm({ event, setEvents }) {
       id: 2,
       title: (
         <div className="d-grid">
-          <button
-            onClick={() => setShowModal(true)}
-            className="btn btn-secondary "
-          >
+          <button onClick={() => setShowModal(true)} className="btn  ">
             <big>Delete</big>
           </button>
         </div>
@@ -139,12 +142,12 @@ export default function EventForm({ event, setEvents }) {
           setShowModal={setShowModal2}
           setEvents={setEvents}
         />
-        <Typography marginLeft={2} variant="body1" color="text.primary">
+        <Typography marginLeft={2} variant="h2" color="text.primary">
           {event.title}
         </Typography>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Date : {Moment(event.date).format("DD-MM-YYYY")}
+            Start date : {Moment(event.date).format("DD-MM-YYYY")}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Duration : {event.duration}
@@ -170,7 +173,20 @@ export default function EventForm({ event, setEvents }) {
           <CardContent>
             <Typography>Description :</Typography>
             <Typography paragraph>{event.description}</Typography>
-            <Typography>Participants :</Typography>
+            {participants.length === 0 && (
+              <Typography>
+                Participants :{" "}
+                <button onClick={() => setShowModal2(true)} className="btn  ">
+                  <AddIcon/>
+                </button>
+              </Typography>
+            )}
+
+            {participants.length !== 0 && (
+              <Typography>
+                Participants :{" "}
+              </Typography>
+            )}
 
             <List>
               {/* {generate( */}
