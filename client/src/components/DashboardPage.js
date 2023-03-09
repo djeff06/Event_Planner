@@ -95,7 +95,8 @@ const DashboardPage = () => {
             padding: "10px 20px",
           }}
         >
-          <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+          <DownloadOutlinedIcon sx={{ mr: "10px" }} 
+          />
           Download Reports
         </Button>
       </Box>
