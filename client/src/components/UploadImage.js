@@ -8,11 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export function UploadImage() {
   const [avatar, setAvatar] = useState("");
 
-  // const removeImg = () => {};
-
   const uploadImg = async (e) => {
-    // data for submit
-
 
     const image = e.target.files[0];
     const upImg = URL.createObjectURL(image);
@@ -29,18 +25,6 @@ export function UploadImage() {
     const data = await response.json();
     const { put, get, key } = data;
     await axios.put(put, image);
-
-    /*  try {
-      await fetch(get, {
-        method: "GET",
-        body: JSON.stringify(image),
-        
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-     */
-    // sendDAtaToDAtaBase(key);
   };
 
   return (

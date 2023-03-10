@@ -22,7 +22,7 @@ const EventSchema = new Schema(
       required: true,
     },
     participants: {
-      ref: "User", 
+      ref: "User",
       type: [String],
       required: false,
     },
@@ -40,8 +40,8 @@ EventSchema.statics.cardEvents = async function (
   duration,
   description,
   participants,
-  postedBy,
-){
+  postedBy
+) {
   //Validating username, email and password
 
   if (!validator.isAlphanumeric(title, description, "pl-PL")) {
@@ -56,19 +56,14 @@ EventSchema.statics.cardEvents = async function (
     throw Error("Please use a strong password");
   }
 
-/*   if (!validator.isArray(participants)) {
-    throw new Error("Please use a valid character");
-  } */
-
-/*   const userExists = await this.findOne({ participants });
-
-  if (userExists) {
-    throw Error("user already exists!");
-  } */
-
-  
-
-  const event = await this.create({ title, date, duration, description, participants,postedBy});
+  const event = await this.create({
+    title,
+    date,
+    duration,
+    description,
+    participants,
+    postedBy,
+  });
 
   return event;
 };

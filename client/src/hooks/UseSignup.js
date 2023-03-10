@@ -1,22 +1,16 @@
 import { useContext, useState } from "react";
 import { Auth } from "../contexts/Auth";
-// import { useFcmToken } from "./useFcmToken";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useContext(Auth);
-  // const { requestPermission } = useFcmToken();
 
   const signup = async (username, email, password, confirmPassword) => {
     setIsLoading(true);
     setError(null);
 
-    // const fcmToken =
-    // await requestPermission();
-
-    
     const response = await fetch("/api/users/signup", {
       method: "POST",
       headers: {
@@ -29,7 +23,6 @@ export const useSignup = () => {
         password,
         confirmPassword,
         key: "",
-        // fcmToken: fcmToken,
       }),
     });
 

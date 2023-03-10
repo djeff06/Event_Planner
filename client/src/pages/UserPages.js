@@ -8,7 +8,6 @@ import CalendarPage from "../components/CalendarPge";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Auth } from "../contexts/Auth";
-import Header from "../components/Header";
 
 export default function UserPages() {
   const { user } = useContext(Auth);
@@ -75,7 +74,6 @@ export default function UserPages() {
             setTheme1={setTheme1}
             className="h-100 w-100"
           />
-          {/* <Header title= {`Welcome Back ${user.username}`} /> */}
 
           {location.pathname === "/user/.../dashboard" && <DashboardPage />}
           {location.pathname === "/user/.../events" && <EventsPage />}

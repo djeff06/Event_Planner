@@ -15,7 +15,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PopupDelete from "./PopupDelete";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 import { Auth } from "../contexts/Auth";
 import Moment from "moment";
@@ -43,16 +43,8 @@ export default function EventForm({ event, setEvents }) {
     setExpanded(!expanded);
   };
 
-  /*   const participant = ()=>{
-    if(event.participants.length === 0){
-      return 
-    } else {
-      return event.participants
-    }
-  } */
-
   const participants = event.participants;
-  console.log("participants", participants.length)
+  console.log("participants", participants.length);
 
   // profile menu
 
@@ -177,19 +169,16 @@ export default function EventForm({ event, setEvents }) {
               <Typography>
                 Participants :{" "}
                 <button onClick={() => setShowModal2(true)} className="btn  ">
-                  <AddIcon/>
+                  <AddIcon />
                 </button>
               </Typography>
             )}
 
             {participants.length !== 0 && (
-              <Typography>
-                Participants :{" "}
-              </Typography>
+              <Typography>Participants : </Typography>
             )}
 
             <List>
-              {/* {generate( */}
               {participants.map((participant) => (
                 <ListItem
                   key={participant._id}
@@ -199,11 +188,6 @@ export default function EventForm({ event, setEvents }) {
                     </IconButton>
                   }
                 >
-                  {/* <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar> */}
                   <ListItemText
                     primary={
                       <span className="text-sm">{participant.username}</span>

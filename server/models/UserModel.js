@@ -31,11 +31,6 @@ const UserSchema = new Schema(
       required: false,
 
     },
-    // fcmToken: {
-    //   type: String,
-    //   required: false,
-
-    // },
   },
   { timestamps: true, toJSON: {
     transform: function (doc, ret) {
@@ -55,7 +50,6 @@ UserSchema.statics.signup = async function (
   password,
   confirmPassword,
   key,
-  // fcmToken
 ) {
   //Validating username, email and password
 

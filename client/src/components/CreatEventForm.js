@@ -5,7 +5,6 @@ import useFormikForm from "../hooks/useFormikForm";
 import { Auth } from "../contexts/Auth";
 import Select from "react-select";
 
-
 export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
   const array = [];
   users.map((user) => {
@@ -14,7 +13,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
 
   const { MyTextInput } = useFormikForm();
   const { user } = useContext(Auth);
-
 
   const array2 = [];
   array.map((ar) => {
@@ -112,7 +110,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
     }
   };
 
-
   // Send an invitation
   async function handleSendInvitations(part) {
     const response = await fetch("/api/send-invitations", {
@@ -125,7 +122,6 @@ export const CreatEventForm = ({ setShowModal, setEvents, users }) => {
     });
     console.log("response from the fetch", response);
   }
-
 
   return (
     <div className="flex flex-col w-full">

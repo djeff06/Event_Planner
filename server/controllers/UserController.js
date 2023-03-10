@@ -14,28 +14,18 @@ const login = async (req, res) => {
     //Create the JWT
     const token = generateToken(user._id);
 
-    // up
-
     const { _id } = user._id;
     try {
       const getUser = await User.findById(_id);
       if (!getUser) {
         return res.status(404).json({ err: "user not found!" });
       }
-      // await Event.findById({ _id: id });
-
-      // if (fcmToken) {
-      //   getUser.fcmToken = fcmToken;
-      // }
-      // console.log(getUser);
 
       await getUser.save();
       return res.status(200).json({
         username: user.username,
         email: user.email,
         token,
-        // fcmToken: user.fcmToken,
-        // message: "fcnToken updated",
       });
     } catch (err) {
       res.status(400).json({ err: true, message: err.message });
@@ -47,28 +37,23 @@ const login = async (req, res) => {
 
 // Signup the user
 const signup = async (req, res) => {
-  const { username, email, password, confirmPassword, key } =
-    req.body;
+  const { username, email, password, confirmPassword, key } = req.body;
   try {
     const user = await User.signup(
       username,
       email,
       password,
       confirmPassword,
-      key,
-      // fcmToken
+      key
     );
 
     //Create the JWT
     const token = generateToken(user._id);
 
-    // generate fcmToken function
-
     res.status(200).json({
       username: user.username,
       email: user.email,
       token,
-      // fcmToken: user.fcmToken,
     });
   } catch (error) {
     res.status(400).json(error.message);
@@ -115,7 +100,6 @@ const updateKey = async (req, res) => {
     if (!getUser) {
       return res.status(404).json({ err: "user not found!" });
     }
-    // await Event.findById({ _id: id });
 
     if (key) {
       getUser.profilePicture = key;

@@ -1,5 +1,4 @@
 import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 import { tokens } from "../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "./Header";
@@ -32,11 +31,6 @@ const DashboardPage = () => {
     fetchEvents();
   }, [user]);
 
-/*   const parsedEvents = events.map((event) => {
-    return event.participants.map((participant) => {
-      return participant.username;
-    });
-  }); */
 
   const columns = [
     {
@@ -143,13 +137,6 @@ const DashboardPage = () => {
           disableRowSelectionOnClick
         />
       </Box>
-
-      {/* GRID & CHARTS */}
-      {/*  <Grid
-        container
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      ></Grid> */}
     </Box>
   );
 };

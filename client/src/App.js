@@ -8,7 +8,6 @@ import { Auth } from "./contexts/Auth";
 import React, { useContext, useState } from "react";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-// import Profile from "./pages/Profile";
 
 import UserPages from "./pages/UserPages";
 
