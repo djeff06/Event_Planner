@@ -75,7 +75,7 @@ export default function UserPages() {
             setTheme1={setTheme1}
             className="h-100 w-100"
           />
-          <Header title= {`Welcome Back ${user.username}`} />
+          {/* <Header title= {`Welcome Back ${user.username}`} /> */}
 
           {location.pathname === "/user/.../dashboard" && <DashboardPage />}
           {location.pathname === "/user/.../events" && <EventsPage />}

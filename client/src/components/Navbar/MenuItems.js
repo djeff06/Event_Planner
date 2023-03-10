@@ -1,4 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,23 +13,20 @@ const MenuItems = ({ showMenu, active }) => {
     >
       <CloseIcon onClick={showMenu} className="cursor-pointer ml-5" />
       <li>
-        <Link onClick={showMenu}  to="/">Home</Link>
+        <Link onClick={showMenu} to="/">
+          Home
+        </Link>
       </li>
+
       <li>
-        <Link onClick={showMenu}  to="/movies">Events</Link>
+        <Link
+          className="btn btn-ghost text-white normal-case mr-2"
+          onClick={showMenu}
+          to="/login"
+        >
+          Login
+        </Link>
       </li>
-      <li>
-        <Link onClick={showMenu}  to="/series">Categories</Link>
-      </li>
-      {
-        <li>
-          <div>
-            <Link className="btn btn-ghost text-white normal-case mr-2" onClick={showMenu}  to="/login">
-                Login
-            </Link>
-          </div>
-        </li>
-      }
     </ul>
   );
 };

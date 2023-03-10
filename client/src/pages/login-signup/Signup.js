@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSignup } from "../../hooks/UseSignup";
 
+import "./log-sign.css";
+
+
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -28,10 +31,12 @@ export default function Signup() {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
+              id="input"
+
               className="login-box"
               placeholder="Enter your Username"
             />
-            <label>Email</label>
+           <label>Email</label>
             <br></br>
             <input
               type="email"
@@ -40,10 +45,11 @@ export default function Signup() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              id="input"
               className="login-box"
               placeholder="Enter your Email"
             />
-            <br></br>
+            <br></br> 
             <label>Password</label>
             <br></br>
             <input
@@ -53,6 +59,7 @@ export default function Signup() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              id="input"
               className="login-box"
               placeholder="Choose your password"
             />
@@ -64,6 +71,7 @@ export default function Signup() {
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
               }}
+              id="input"
               className="login-box"
               placeholder="Confirm your password"
             />

@@ -10,31 +10,46 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-/* import { makeStyles } from "@mui/core/styles";
-
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-    padding: "20px",
-  },
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-}); */
+import heroImage from "../assets/eventcard.png";
 
 const Home = () => {
-  // const classes = useStyles();
-  // console.log("classes", classes)
-
   return (
     <div className="flexGrow-1 p-20px">
+      <section id="hero-section">
+        <div className="flex flex-col md:flex-row items-center justify-center py-10">
+          <div className="md:w-2/3 px-20">
+            <h1 className="text-4xl font-bold mb-4">Plan Your Event with us</h1>
+            <p className="mb-4">
+              Enter your email to start planning your perfect event with our
+              event planner tool.
+            </p>
+            <form className="flex items-center">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="border border-gray-600 rounded-l py-2 px-3 bg-gray-800 text-white outline-none"
+              />
+              <button
+                type="submit"
+                className="bg-indigo-500 hover:bg-indigo-600 rounded-r py-2 px-4 ml-2"
+              >
+                Get Started
+              </button>
+            </form>
+          </div>
+          <div className="md:w-1/3 px-10">
+            <img
+              src={heroImage}
+              alt="Event planner"
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </section>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h2" align="center" gutterBottom>
-            Event Planner
+            We plan, You party
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -55,14 +70,7 @@ const Home = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions>
-              <Button size="small" color="primary">
-                Learn More
-              </Button>
-              <Button size="small" color="primary">
-                Book Now
-              </Button>
-            </CardActions>
+       
           </Card>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -83,17 +91,10 @@ const Home = () => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions>
-              <Button size="small" color="primary">
-                Learn More
-              </Button>
-              <Button size="small" color="primary">
-                Book Now
-              </Button>
-            </CardActions>
+      
           </Card>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item sm={12}  >
           <Typography variant="h4" align="center" gutterBottom>
             About Us
           </Typography>
@@ -116,7 +117,7 @@ const Home = () => {
             Phone: 555-555-5555
           </Typography>
           <Typography variant="body1" align="center" gutterBottom>
-            Address: 123 Main St, Anytown USA
+            Address: 06000 Bejaia, Algeria
           </Typography>
         </Grid>
       </Grid>

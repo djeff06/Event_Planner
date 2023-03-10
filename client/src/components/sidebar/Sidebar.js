@@ -25,9 +25,12 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
   return (
     <MenuItem
-      className="hover:"
       active={selected === title}
-      style={{ color: colors.grey[100] }}
+      style={{
+        color: colors.grey[100],
+        backgroundColor: selected === title ? colors.blueAccent[500] : "transparent",
+        
+      }}
       onClick={() => setSelected(title)}
       icon={icon}
       routerLink={<Link to={to} />}
@@ -40,7 +43,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const MyProSidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [selected, setSelected] = useState("Dashboard");
+  const [selected, setSelected] = useState("");
   const [avatar, setAvatar] = useState("");
   const { sidebarRTL, setSidebarRTL, sidebarImage } = useSidebarContext();
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
@@ -122,7 +125,7 @@ const MyProSidebar = () => {
         "& .menu-icon": {
           backgroundColor: "transparent !important",
         },
-        "& .menu-item": {
+        "& .MenuItem": {
           // padding: "5px 35px 5px 20px !important",
           backgroundColor: "transparent !important",
         },
@@ -165,7 +168,10 @@ const MyProSidebar = () => {
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
+            backgroundColor: "transparent",
+
             }}
+            
           >
             {!collapsed && (
               <Box
@@ -237,7 +243,7 @@ const MyProSidebar = () => {
             </Box>
           )}
           <Box paddingLeft={collapsed ? undefined : "0%"}>
-            <Item
+            <Item className="& ::hover"
               title="Dashboard"
               to=".../dashboard"
               icon={<HomeOutlinedIcon />}

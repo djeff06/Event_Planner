@@ -24,7 +24,7 @@ const LoginForm = () => {
             <br></br>
             <input
               type="email"
-              name="username"
+              name="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);

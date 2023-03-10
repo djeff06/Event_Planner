@@ -8,7 +8,7 @@ import { Auth } from "../contexts/Auth";
 import Select from "react-select";
 
 export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
-  console.log("event",event)
+  console.log("event", event);
   const id = event._id;
   const array = [];
   users.map((user) => {
@@ -57,7 +57,18 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
       console.log(error);
     }
   };
-
+  // send invitations
+  async function handleSendInvitations(part) {
+    const response = await fetch("/api/send-invitations", {
+      method: "POST",
+      body: JSON.stringify({ invitations: part }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    console.log("response from the fetch", response);
+  }
   // multi select
 
   const MultiSelect = ({
@@ -104,7 +115,7 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
     } else {
       return (
         <Select
-          className="react-select-container"
+          className="react-select-container text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 "
           classNamePrefix="react-select"
           name={field.name}
           value={getValue()}
@@ -122,11 +133,11 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
     <div className="flex flex-col w-full">
       <Formik
         initialValues={{
-          title:`${event.title}`,
+          title: `${event.title}`,
           date: `${event.date}`,
           duration: `${event.duration}`,
           description: `${event.description}`,
-          participants: `${event.participants.map(user=>user.id)}`,
+          participants: `${event.participants.map((user) => user.id)}`,
         }}
         validationSchema={Yup.object({
           title: Yup.string().max(30, "Must be 15 characters or less"),
@@ -137,22 +148,23 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
         })}
         onSubmit={async (values) => {
           const event = { ...values };
+          const part = values.participants;
           await fetchEvents(event);
           await fetchAllEvents();
           setShowModal(false);
-          console.log(event)
+          handleSendInvitations(part);
         }}
       >
         <Form>
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Title"
             name="title"
             type="text"
             placeholder="title of event"
           />
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Date"
             name="date"
             type="date"
@@ -160,14 +172,14 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
           />
 
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
             label="Duration"
             name="duration"
             type="number"
             placeholder="number of days"
           />
           <MyTextInput
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 mb-10"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 mb-10"
             label="Description"
             name="description"
             type="text"
@@ -175,7 +187,7 @@ export const UpdateForm = ({ setShowModal, setEvents, users, event }) => {
           />
 
           <Field
-            className="bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200"
+            className="textLeft text-black bg-slate-100 border-2 rounded-lg py-2.5 px-2 border-slate-200 "
             name="participants"
             id="multiSelectCustom"
             placeholder="Participants"
